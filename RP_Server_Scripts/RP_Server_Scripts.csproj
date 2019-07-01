@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6C52990F-6E36-44EA-98A8-AA1C214E1EEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RP_Server_Scripts</RootNamespace>
+    <AssemblyName>RP_Server_Scripts</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\GothicII\Server\Scripts\</OutputPath>
+    <OutputPath>..\bin\Server\Scripts\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;D_SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\GothicII\Server\Scripts\</OutputPath>
+    <OutputPath>..\bin\Server\Scripts\</OutputPath>
+    <DefineConstants>TRACE;D_SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>..\Sqlite\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Autofac\AllConstructorFinder.cs" />
+    <Compile Include="Chat\ChatCommandController.cs" />
+    <Compile Include="Chat\HelpChatCommand.cs" />
+    <Compile Include="Chat\IChatCommand.cs" />
+    <Compile Include="Logging\GucLogger.cs" />
+    <Compile Include="Logging\GucLoggerFactory.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\ILoggerFactory.cs" />
+    <Compile Include="Network\IScriptMessageHandler.cs" />
+    <Compile Include="Network\IScriptMessageHandlerSelector.cs" />
+    <Compile Include="Network\ScriptMessageHandlerSelector.cs" />
+    <Compile Include="Network\ScriptMessages\LeaveGameMessageHandler.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RP\RpConfigurationException.cs" />
+    <Compile Include="ServerOptionsProvider.cs" />
+    <Compile Include="Threading\IMainThreadDispatcher.cs" />
+    <Compile Include="Threading\MainThreadDispatcher.cs" />
+    <Compile Include="VobSystem\Definitions\BaseDefFactory.cs" />
+    <Compile Include="VobSystem\Definitions\DefListBase.cs" />
+    <Compile Include="VobSystem\Definitions\IItemDefList.cs" />
+    <Compile Include="VobSystem\Definitions\IItemDefRegistration.cs" />
+    <Compile Include="VobSystem\Definitions\ItemDefList.cs" />
+    <Compile Include="VobSystem\Definitions\VobDefList.cs" />
+    <Compile Include="VobSystem\Definitions\VobDefRegistration.cs" />
+    <Compile Include="VobSystem\Definitions\INpcDefListRegistration.cs" />
+    <Compile Include="VobSystem\Definitions\NpcDefList.cs" />
+    <Compile Include="VobSystem\Definitions\IVobDefList.cs" />
+    <Compile Include="VobSystem\Definitions\IVobDefListRegistration.cs" />
+    <Compile Include="Network\IPacketWriterFactory.cs" />
+    <Compile Include="VobSystem\Definitions\IBaseDefFactory.cs" />
+    <Compile Include="VobSystem\Definitions\INpcDefList.cs" />
+    <Compile Include="VobSystem\Definitions\IVobDefRegistration.cs" />
+    <Compile Include="VobSystem\Instances\AddItemHandler.cs" />
+    <Compile Include="VobSystem\Instances\NpcEvent.cs" />
+    <Compile Include="VobSystem\Instances\OnEquipHandler.cs" />
+    <Compile Include="VobSystem\Instances\OnHitHandler.cs" />
+    <Compile Include="VobSystem\Instances\OnDeathHandler.cs" />
+    <Compile Include="VobSystem\Instances\OnItemAmountChangedHandler.cs" />
+    <Compile Include="VobSystem\Instances\RemoveItemHandler.cs" />
+    <Compile Include="Network\PacketWriterFactory.cs" />
+    <Compile Include="Chat\ChatCommandReceivedEventArgs.cs" />
+    <Compile Include="Chat\ChatMessageEventArgs.cs" />
+    <Compile Include="ReusedClasses\ChatMode.cs" />
+    <Compile Include="Chat\IChatMessageReceiver.cs" />
+    <Compile Include="Chat\Chat.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="Network\ScriptMessages\ChatScriptMessageHandler.cs" />
+    <Compile Include="Client\ClientConnectedEventArgs.cs" />
+    <Compile Include="Client\ClientDisconnectedEventArgs.cs" />
+    <Compile Include="Client\ClientFactory.cs" />
+    <Compile Include="Client\ClientList.cs" />
+    <Compile Include="Client\IClientFactory.cs" />
+    <Compile Include="Network\ScriptMessages\JoinGameScriptMessageHandler.cs" />
+    <Compile Include="Network\ScriptMessages\SpectateScriptMessageHandler.cs" />
+    <Compile Include="WorldSystem\DoNothingBarrierControl.cs" />
+    <Compile Include="WorldSystem\WorldList.cs" />
+    <Compile Include="GUCScripts.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="NPCInstEffectHandler.cs" />
+    <Compile Include="ReusedClasses\Utilities\ArrayUtil.cs" />
+    <Compile Include="ReusedClasses\Utilities\DateTimeUtil.cs" />
+    <Compile Include="ReusedClasses\Utilities\ExceptionCheck.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\Enumeration\InvocationType.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\FunctionManager.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\IManagerInteraction.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_Add.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_AddRange.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_Clear.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_Remove.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_RemoveExceptTimeRange.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_RemoveInTimeRange.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_RemoveRange.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_Replace.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\ManagerInteraction\MI_ReplaceRange.cs" />
+    <Compile Include="ReusedClasses\Utilities\Functions\TimedFunction.cs" />
+    <Compile Include="ReusedClasses\Utilities\Geometry\InGeometry.cs" />
+    <Compile Include="ReusedClasses\Utilities\ListUtil.cs" />
+    <Compile Include="ReusedClasses\Utilities\StringUtil.cs" />
+    <Compile Include="Visuals\ModelDef.cs" />
+    <Compile Include="Visuals\ModelInst.cs" />
+    <Compile Include="Visuals\ScriptAni.cs" />
+    <Compile Include="Visuals\ScriptAniJob.cs" />
+    <Compile Include="Visuals\ScriptOverlay.cs" />
+    <Compile Include="VobSystem\Definitions\BaseVobDef.cs" />
+    <Compile Include="VobSystem\Definitions\ItemDef.cs" />
+    <Compile Include="VobSystem\Definitions\Item\ItemMaterials.cs" />
+    <Compile Include="VobSystem\Definitions\Item\ItemTypes.cs" />
+    <Compile Include="VobSystem\Definitions\Mobs\MobDef.cs" />
+    <Compile Include="VobSystem\Definitions\NamedVobDef.cs" />
+    <Compile Include="VobSystem\Definitions\NpcDef.cs" />
+    <Compile Include="VobSystem\Definitions\ProjDef.cs" />
+    <Compile Include="VobSystem\Definitions\VobDef.cs" />
+    <Compile Include="VobSystem\Instances\Allegiance.cs" />
+    <Compile Include="VobSystem\Instances\BaseVobInst.cs" />
+    <Compile Include="VobSystem\Instances\ClimbMoves.cs" />
+    <Compile Include="VobSystem\Instances\FightMoves.cs" />
+    <Compile Include="VobSystem\Instances\ItemContainers\ScriptInventory.cs" />
+    <Compile Include="VobSystem\Instances\ItemInst.cs" />
+    <Compile Include="VobSystem\Instances\JumpMoves.cs" />
+    <Compile Include="VobSystem\Instances\Mobs\MobInst.cs" />
+    <Compile Include="VobSystem\Instances\NamedVobInst.cs" />
+    <Compile Include="VobSystem\Instances\NPCSlots.cs" />
+    <Compile Include="VobSystem\Instances\NpcInst.cs" />
+    <Compile Include="VobSystem\Instances\ProjInst.cs" />
+    <Compile Include="VobSystem\Instances\Unconsciousness.cs" />
+    <Compile Include="VobSystem\Instances\VobInst.cs" />
+    <Compile Include="VobSystem\VobTypes.cs" />
+    <Compile Include="WorldSystem\ScriptBarrierCtrl.cs" />
+    <Compile Include="WorldSystem\ScriptClock.cs" />
+    <Compile Include="WorldSystem\ScriptWeatherCtrl.cs" />
+    <Compile Include="WorldSystem\WorldDef.cs" />
+    <Compile Include="WorldSystem\WorldInst.cs" />
+    <Compile Include="Definitions\BloodfliesDefBuilder.cs" />
+    <Compile Include="Definitions\CrawlerDefinitionBuilder.cs" />
+    <Compile Include="Definitions\DragonDefBuilder.cs" />
+    <Compile Include="Definitions\DragonsnapperDefBuilder.cs" />
+    <Compile Include="Definitions\HumanoidDefBuilder.cs" />
+    <Compile Include="Definitions\IDefBuilder.cs" />
+    <Compile Include="Definitions\ItemDefBuilder.cs" />
+    <Compile Include="Definitions\LizardDefBuilder.cs" />
+    <Compile Include="Definitions\LurkersDefBuilder.cs" />
+    <Compile Include="Definitions\MiscDefBuilder.cs" />
+    <Compile Include="Definitions\OrcDefBuilder.cs" />
+    <Compile Include="Definitions\RatsDefBuilder.cs" />
+    <Compile Include="Definitions\ScavengerDefBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RP\RpConfig.cs" />
+    <Compile Include="ScriptInitialization.cs" />
+    <Compile Include="Sqlite.cs" />
+    <Compile Include="ReusedClasses\NPCRequestReceiver.cs" />
+    <Compile Include="ReusedClasses\AniCatalog.cs" />
+    <Compile Include="ReusedClasses\NPCCatalog.cs" />
+    <Compile Include="Visuals\SpecialFrame.cs" />
+    <Compile Include="ReusedClasses\DespawnList.cs" />
+    <Compile Include="VobSystem\Definitions\Mobs\MobInterDef.cs" />
+    <Compile Include="VobSystem\Instances\Mobs\MobInterInst.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GUCServer\GUCServer.csproj">
+      <Project>{27FA7C52-3C80-4B72-8FBB-BCAC0328236E}</Project>
+      <Name>GUCServer</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RP_Shared_Script\RP_Shared_Script.csproj">
+      <Project>{a072c908-bb56-404a-b660-679e62e47500}</Project>
+      <Name>RP_Shared_Script</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Sqlite\sqlite3.dll">
+      <Link>sqlite3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

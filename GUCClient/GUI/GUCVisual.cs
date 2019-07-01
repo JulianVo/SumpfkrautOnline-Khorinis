@@ -82,6 +82,8 @@ namespace GUC.GUI
             for (int i = 0; i < children.Count; i++)
                 children[i].Show();
             shown = true;
+
+            zView.Top();
         }
 
         public override void Hide()

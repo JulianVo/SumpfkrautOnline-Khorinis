@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2BAA8029-6E51-45F8-9980-D0CFF83D7DC3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RP_Server_Scripts.Authentication</RootNamespace>
+    <AssemblyName>RP_Server_Scripts.Authentication</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Server\Scripts\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.Authentication.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Server\Scripts\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.Authentication.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BCrypt.Net-Next, Version=3.1.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.3.1.3\lib\net40\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\Account.cs" />
+    <Compile Include="Account\AccountCreatedEventArgs.cs" />
+    <Compile Include="Account\AccountCreationFailed.cs" />
+    <Compile Include="Account\AccountCreationResult.cs" />
+    <Compile Include="Account\AccountCreationSuccessful.cs" />
+    <Compile Include="AuthenticationModule.cs" />
+    <Compile Include="AuthenticationService.cs" />
+    <Compile Include="ChatCommands\LoginStateChatCommand.cs" />
+    <Compile Include="ChatCommands\RegisterChatCommand.cs" />
+    <Compile Include="ChatCommands\LogOutChatCommand.cs" />
+    <Compile Include="Crypto\IPasswordService.cs" />
+    <Compile Include="Login\LoginEventArgs.cs" />
+    <Compile Include="Login\LoginFailedResult.cs" />
+    <Compile Include="Login\LoginResult.cs" />
+    <Compile Include="Crypto\BCrypPasswordService.cs" />
+    <Compile Include="Login\LoginSuccessfulResult.cs" />
+    <Compile Include="Login\LogoutEventArgs.cs" />
+    <Compile Include="MessageHandler\AuthenticatedMessageHandlerDecorator.cs" />
+    <Compile Include="MessageHandler\CreateAccountMessageHandler.cs" />
+    <Compile Include="MessageHandler\LoginMessageHandler.cs" />
+    <Compile Include="MessageHandler\LogoutMessageHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Session\Session.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GUCServer\GUCServer.csproj">
+      <Project>{27FA7C52-3C80-4B72-8FBB-BCAC0328236E}</Project>
+      <Name>GUCServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RP_Server_Scripts.Database\RP_Server_Scripts.Database.csproj">
+      <Project>{5f415e2d-a0e5-41ba-be6c-8be568bd4735}</Project>
+      <Name>RP_Server_Scripts.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RP_Server_Scripts\RP_Server_Scripts.csproj">
+      <Project>{6c52990f-6e36-44ea-98a8-aa1c214e1eeb}</Project>
+      <Name>RP_Server_Scripts</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RP_Shared_Script\RP_Shared_Script.csproj">
+      <Project>{A072C908-BB56-404A-B660-679E62E47500}</Project>
+      <Name>RP_Shared_Script</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

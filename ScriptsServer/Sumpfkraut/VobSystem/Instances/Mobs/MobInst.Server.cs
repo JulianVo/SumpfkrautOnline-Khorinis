@@ -12,6 +12,5 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs
         {
             this.Definition = def;
         }
-
     }
 }

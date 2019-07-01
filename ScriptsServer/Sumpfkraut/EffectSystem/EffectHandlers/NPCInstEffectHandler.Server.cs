@@ -7,7 +7,6 @@ using GUC.Scripts.Sumpfkraut.VobSystem.Definitions;
 using GUC.Scripts.Sumpfkraut.VobSystem.Enumeration;
 using GUC.Utilities;
 using GUC.Types;
-using GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs;
 
 namespace GUC.Scripts.Sumpfkraut.EffectSystem.EffectHandlers
 {
@@ -319,25 +318,12 @@ namespace GUC.Scripts.Sumpfkraut.EffectSystem.EffectHandlers
         }
 
 
-        public void TryUseItem(ItemInst item)
+        public void TryUse(ItemInst item)
         {
             if (item == null || this.Host.IsObstructed())
                 return;
 
             this.Host.UseItem(item);
-        }
-
-        public void TryStartUseMob(MobInst mobInst)
-        {
-            if (mobInst == null || this.Host.IsObstructed())
-                return;
-
-            this.Host.StartUseMob(mobInst);
-        }
-
-        public void TryStopUseMob()
-        {
-            this.Host.StopUseMob();
         }
 
         public void TryDropItem(ItemInst item, int amount)

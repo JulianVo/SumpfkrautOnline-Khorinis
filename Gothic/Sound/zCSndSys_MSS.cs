@@ -100,5 +100,10 @@ namespace Gothic.Sound
         {
             return Process.THISCALL<BoolArg>(GetZSound(), 0x4F3FD0, (IntArg)sndIDPtr);
         }
+
+        public static void StopAllSounds()
+        {
+            Process.THISCALL<NullReturnCall>(GetZSound(), 0x04F23C0);
+        }
     }
 }

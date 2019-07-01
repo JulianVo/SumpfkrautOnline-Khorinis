@@ -48,5 +48,15 @@ namespace Gothic.Objects
         {
             Process.THISCALL<NullReturnCall>(Address, 0x77EFB0, (BoolArg)true);
         }
+
+        public void DisposeWorld()
+        {
+            Process.THISCALL<NullReturnCall>(Address, 0x0780D50);
+        }
+
+        public void DisposeVobs()
+        {
+            Process.THISCALL<NullReturnCall>(Address, 0x0780BD0);
+        }
     }
 }

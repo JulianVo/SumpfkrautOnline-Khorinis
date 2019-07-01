@@ -14,7 +14,6 @@ using GUC.WorldObjects;
 using GUC.Scripts.Arena.Duel;
 using GUC.Scripts.Sumpfkraut.VobSystem.Definitions.Mobs;
 using GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs;
-using GUC.Scripts.Sumpfkraut.Mobs;
 
 namespace GUC.Scripts
 {
@@ -148,9 +147,7 @@ namespace GUC.Scripts
             NPCInst.Requests.OnAim += npc => npc.EffectHandler.TryAim();
             NPCInst.Requests.OnUnaim += npc => npc.EffectHandler.TryUnaim();
             NPCInst.Requests.OnShoot += (npc, s, e) => npc.EffectHandler.TryShoot(s, e);
-            NPCInst.Requests.OnUseItem += (npc, item) => npc.EffectHandler.TryUseItem(item);
-            NPCInst.Requests.OnStartUseMob += (npc, mobInst) => npc.EffectHandler.TryStartUseMob(mobInst);
-            NPCInst.Requests.OnStopUseMob += (npc) => npc.EffectHandler.TryStopUseMob();
+            NPCInst.Requests.OnUseItem += (npc, item) => npc.EffectHandler.TryUse(item);
             NPCInst.Requests.OnDropItem += (npc, item, amount) => npc.EffectHandler.TryDropItem(item, amount);
             NPCInst.Requests.OnTakeItem += (npc, item) => npc.EffectHandler.TryTakeItem(item);
             NPCInst.Requests.OnVoice += (npc, cmd) => npc.EffectHandler.TryVoice(cmd);
@@ -198,7 +195,7 @@ namespace GUC.Scripts
             Arena.GameModes.BattleRoyale.BRWorldLoader.Load(world);
 
             Logger.Log("Creating the Chair!");
-            ModelDef m = new ModelDef("chair1", "BEDHIGH_1_OC.ASC");
+            ModelDef m = new ModelDef("chair1", "CHAIR_1_OC.ASC");
             m.Create();
 
             MobDef chair1 = new MobDef("Chair1")
@@ -208,11 +205,8 @@ namespace GUC.Scripts
             };
             chair1.Create();
 
-           // MobInst theChair = new MobInst(chair1);
-            MobBedInst chair = new MobBedInst(chair1);
-            chair.Spawn(world, new Vec3f(-3907.42f, -680.4108f, 2961.229f), new Angles(0, 0.7539826f, 0f));
-            //theChair.Spawn(world, new Vec3f(-3807.42f, -680.4108f, 2961.229f), new Angles(0, 0.7539826f, 0f));
-
+            MobInst theChair = new MobInst(chair1);
+            theChair.Spawn(world, new Vec3f(-3807.42f, -680.4108f, 2961.229f), new Angles(0, 0.7539826f, 0f));
         }
 
         void AddSomeDefs()
@@ -224,7 +218,6 @@ namespace GUC.Scripts
             Add1HAnis(m);
             Add2hAnis(m);
             AddJumpAnis(m);
-            AddMobAnis(m);
             AddClimbAnis(m);
             AddBowAnis(m);
             AddXBowAnis(m);
@@ -985,35 +978,6 @@ namespace GUC.Scripts
             model.AddAniJob(new ScriptAniJob("jump_fwd", "t_Stand_2_Jump"));
             model.AddAniJob(new ScriptAniJob("jump_run", "t_RunL_2_Jump"));
             model.AddAniJob(new ScriptAniJob("jump_up", "t_Stand_2_JumpUp"));
-        }
-
-        #endregion
-
-        #region Mob Anis
-
-        void AddMobAnis(ModelDef model)
-        {
-            #region Chair
-            ScriptAniJob standToSit = new ScriptAniJob("mob_chair_standToSit", "t_Chair_S0_2_S1", new ScriptAni(0, 39));
-            model.AddAniJob(standToSit);
-            ScriptAniJob sit = new ScriptAniJob("mob_chair_sit", "s_Chair_S1", new ScriptAni());
-            model.AddAniJob(sit);
-            standToSit.NextAni = sit;
-
-            ScriptAniJob sitToStand = new ScriptAniJob("mob_chair_sitToStand", "t_Chair_S1_2_S0", new ScriptAni(0, 39));
-            model.AddAniJob(sitToStand);
-            #endregion
-
-            #region Bed
-            ScriptAniJob standToSleep = new ScriptAniJob("mob_bed_standToSleep", "t_BedHigh_Front_S0_2_S1", new ScriptAni(0, 39));
-            model.AddAniJob(standToSleep);
-            ScriptAniJob sleep = new ScriptAniJob("mob_bed_sleep", "s_BedHigh_Front_S1", new ScriptAni());
-            model.AddAniJob(sleep);
-            standToSleep.NextAni = sleep;
-
-            ScriptAniJob sleepToStand = new ScriptAniJob("mob_bed_sleepToStand", "t_BedHigh_Front_S1_2_S0", new ScriptAni(0, 39));
-            model.AddAniJob(sleepToStand);
-            #endregion
         }
 
         #endregion

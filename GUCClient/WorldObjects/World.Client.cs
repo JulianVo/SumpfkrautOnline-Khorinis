@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Gothic;
+using Gothic.Music;
 using Gothic.Objects;
+using Gothic.Session;
+using Gothic.Sound;
 using GUC.Network;
 using GUC.Scripting;
-using GUC.Types;
-using GUC.GUI;
+using GUC.Log;
 
 namespace GUC.WorldObjects
 {
     public partial class World
     {
+        public static event EventHandler WorldUnloaded;
+
         #region Network Messages
 
         internal static class Messages
@@ -67,7 +69,43 @@ namespace GUC.WorldObjects
 
             public static void ReadLeaveWorldMessage(PacketReader stream)
             {
-                throw new NotImplementedException();
+                if (current != null)
+                {
+                    var npc = new List<oCNpc>();
+                    World.Current.ForEachVob(v =>
+                    {
+                        if (v.gVob.VTBL == zCObject.gVobTypes.oCNpc)
+                        {
+                            npc.Add(new oCNpc(v.gVob.Address));
+                        }
+                        v.Despawn();
+                    });
+
+                    oCGame.GetGame().ClearGameState();
+                    oCGame.GetGame().GetSpawnManager().ClearList();
+                    new oCWorld(Current.gWorld.Address).DisposeVobs();
+                    new oCWorld(Current.gWorld.Address).DisposeWorld();
+
+                    foreach (var oCNpc in npc)
+                    {
+                        Logger.Log(Log.Logger.LOG_INFO, $"vobtype is ");
+                        Logger.Log(Log.Logger.LOG_INFO, $"Vob ''{oCNpc.VTBL.ToString()} has refCtr of {oCNpc.refCtr}");
+                    }
+
+                    //Stop all sounds.
+                    zCSndSys_MSS.StopAllSounds();
+                    //Stop the currently playing music
+
+                    zCMusicSys_DirectMusic.Stop();
+                    //ToDo The call to CheckObjectConsistency does currently still fail. Find out why
+                    //oCGame.GetGame().CheckObjectConsistency();
+
+                    current.Delete();
+                    current = null;
+
+                    WorldUnloaded?.Invoke(null, new EventArgs());
+                }
+
             }
 
             #endregion

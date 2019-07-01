@@ -23,11 +23,12 @@ namespace Gothic
         public abstract class FuncAddresses
         {
             public const int ExitGame = 0x00425780,
-            Done = 0x004254E0,
-            ApplySomeSettings = 0x4276B0,
-            PlayVideo = 0x0042B940,
-            InitScreen_Close = 0x426330,
-            GameSessionDone = 0x426F70;
+                Done = 0x004254E0,
+                ApplySomeSettings = 0x4276B0,
+                PlayVideo = 0x0042B940,
+                InitScreen_Close = 0x426330,
+                GameSessionDone = 0x426F70,
+                ExitSession = 0x00425790;
         }
 
         /*public enum HookSize : uint
@@ -47,10 +48,20 @@ namespace Gothic
             Process.THISCALL<NullReturnCall>(Process.ReadInt(gameMan), FuncAddresses.ExitGame);
         }
 
+        /// <summary>
+        /// This method closes the current game session.
+        /// <remarks>public: int __thiscall CGameManager::ExitSession(void)</remarks>
+        /// </summary>
+        public static void ExitSession()
+        {
+            Process.THISCALL<NullReturnCall>(Process.ReadInt(gameMan), FuncAddresses.ExitSession);
+        }
+
         public static void Done()
         {
             Process.THISCALL<NullReturnCall>(Process.ReadInt(gameMan), FuncAddresses.Done);
         }
+
 
         public static int PlayVideo(zString video)
         {

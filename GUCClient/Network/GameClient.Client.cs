@@ -302,9 +302,6 @@ namespace GUC.Network
                 receivedBytes = 0;
                 sentBytes = 0;
 
-                if(NPC.Hero != null)
-                    devInfo.Texts[devIndex++].Text = ("Position: " + NPC.Hero.Position);
-
                 if (World.Current != null)
                 {
                     devIndex = 8;
@@ -398,7 +395,7 @@ namespace GUC.Network
                     break;
 
                 case ServerMessages.WorldLeaveMessage:
-                    throw new NotImplementedException();
+                    World.Messages.ReadLeaveWorldMessage(stream);
                     break;
 
                 // client becomes a spectator

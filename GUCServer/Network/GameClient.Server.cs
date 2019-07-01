@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using RakNet;
 using GUC.WorldObjects;
@@ -20,6 +21,9 @@ namespace GUC.Network
      */
     public partial class GameClient
     {
+
+        public event EventHandler WorldLoaded;
+
         #region Network Messages
 
         internal static class Messages
@@ -152,6 +156,9 @@ namespace GUC.Network
                 {
                     //throw new Exception("Unallowed LoadWorldMessage");
                 }
+
+                //Invoke an event so entering the world can be handled.
+                client.WorldLoaded?.Invoke(client, null);
             }
 
             public static void ReadScriptCommandMessage(PacketReader stream, GameClient client, World world, bool hero)

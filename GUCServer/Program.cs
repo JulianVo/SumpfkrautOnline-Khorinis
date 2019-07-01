@@ -77,7 +77,7 @@ namespace GUC
                 ServerOptions.Load();
                 Console.Title = ServerOptions.ServerName;
 
-                ScriptManager.StartScripts("Scripts\\ServerScripts.dll");
+                ScriptManager.StartScripts("Scripts\\RP_Server_Scripts.dll");
 
                 server = new Thread(RunServer);
                 server.Start();
@@ -114,7 +114,11 @@ namespace GUC
 
                     GameTime.Update();
                     GUCTimer.Update(GameTime.Ticks); // move to new thread?
-                    
+
+                    //Run the dispatcher
+                    GUCDispatcher.Execute();
+
+
                     GameTime.Update();
                     GameServer.Update(); //process received packets
 

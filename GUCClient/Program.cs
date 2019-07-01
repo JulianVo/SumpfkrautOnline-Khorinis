@@ -102,7 +102,13 @@ namespace GUC
                 return Assembly.Load(buffer);
             }
 
-            return Assembly.LoadFrom(Path.Combine(projectPath, name + ".dll"));
+            //Only load assemblies form this location if the actually exist. Otherwise we would block later AppDomain.CurrentDomain.AssemblyResolve  handler(e.g. Costura.Fody)
+            if (File.Exists(Path.Combine(projectPath, name + ".dll")))
+            {
+                return Assembly.LoadFrom(Path.Combine(projectPath, name + ".dll"));
+            }
+
+            return null;
         }
 
         static bool mained = false;
@@ -220,7 +226,7 @@ namespace GUC
 
                 // Load Scripts
                 Logger.Log("Loading client scripts...");
-                Scripting.ScriptManager.StartScripts(Path.Combine(projectPath, "Scripts", "ClientScripts.dll"));
+                Scripting.ScriptManager.StartScripts(Path.Combine(projectPath, "Scripts", "RP_Client_Scripts.dll"));
 
                 Logger.Log("Waiting...");
                 SplashScreen.WaitHandle.WaitOne(3000);

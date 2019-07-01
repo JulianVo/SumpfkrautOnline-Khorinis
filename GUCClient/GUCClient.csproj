@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GUC</RootNamespace>
     <AssemblyName>GUC</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -58,210 +58,75 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GUCShared\Animations\ActiveAni.cs">
-      <Link>Animations\ActiveAni.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Animations\AniJob.cs">
-      <Link>Animations\AniJob.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Animations\Animation.cs">
-      <Link>Animations\Animation.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Animations\FrameActionPair.cs">
-      <Link>Animations\FrameActionPair.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Animations\Overlay.cs">
-      <Link>Animations\Overlay.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameObjects\Collections\DynamicCollection.cs">
-      <Link>GameObjects\Collections\DynamicCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameObjects\Collections\IDODictionary.cs">
-      <Link>GameObjects\Collections\IDODictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameObjects\Collections\StaticCollection.cs">
-      <Link>GameObjects\Collections\StaticCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameObjects\GameObject.cs">
-      <Link>GameObjects\GameObject.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameObjects\IDObject.cs">
-      <Link>GameObjects\IDObject.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\GameTime.cs">
-      <Link>GameTime.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Log\Logger.cs">
-      <Link>Log\Logger.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Models\Model.cs">
-      <Link>Models\Model.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Models\ModelInstance.cs">
-      <Link>Models\ModelInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\ClientMessages.cs">
-      <Link>Network\ClientMessages.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\GameClient.cs">
-      <Link>Network\GameClient.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\PacketEnums.cs">
-      <Link>Network\PacketEnums.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\PacketReader.cs">
-      <Link>Network\PacketReader.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\PacketWriter.cs">
-      <Link>Network\PacketWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Network\ServerMessages.cs">
-      <Link>Network\ServerMessages.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Scripting\ScriptManager.cs">
-      <Link>Scripting\ScriptManager.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Scripting\Timer.cs">
-      <Link>Scripting\Timer.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\Angles.cs">
-      <Link>Types\Angles.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\ColorRGBA.cs">
-      <Link>Types\ColorRGBA.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\NPCMovement.cs">
-      <Link>Types\NPCMovement.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\PosAng.cs">
-      <Link>Types\PosAng.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\Vec2i.cs">
-      <Link>Types\Vec2i.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\Vec3f.cs">
-      <Link>Types\Vec3f.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\VobTypes.cs">
-      <Link>Types\VobTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\WeatherTypes.cs">
-      <Link>Types\WeatherTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Types\WorldTime.cs">
-      <Link>Types\WorldTime.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\Alg.cs">
-      <Link>Utilities\Alg.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\BoolEvent.cs">
-      <Link>Utilities\BoolEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\ExtendedObject.cs">
-      <Link>Utilities\ExtendedObject.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\Extensions.cs">
-      <Link>Utilities\Extensions.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\LockTimer.cs">
-      <Link>Utilities\LockTimer.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\Randomizer.cs">
-      <Link>Utilities\Randomizer.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\ReadOnlyList.cs">
-      <Link>Utilities\ReadOnlyList.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\StringExtensions.cs">
-      <Link>Utilities\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\StructList.cs">
-      <Link>Utilities\StructList.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\Threading\AbstractRunnable.cs">
-      <Link>Utilities\Threading\AbstractRunnable.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\Threading\Runnable.cs">
-      <Link>Utilities\Threading\Runnable.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\Utilities\XMLHelper.cs">
-      <Link>Utilities\XMLHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\BaseVob.cs">
-      <Link>WorldObjects\BaseVob.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Collections\VobTypeObjectCollection.cs">
-      <Link>WorldObjects\Collections\VobTypeObjectCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\BaseVobInstance.cs">
-      <Link>WorldObjects\Instances\BaseVobInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\ItemInstance.cs">
-      <Link>WorldObjects\Instances\ItemInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\MobInstance.cs">
-      <Link>WorldObjects\Instances\MobInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\MobInterInstance.cs">
-      <Link>WorldObjects\Instances\MobInterInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\NPCInstance.cs">
-      <Link>WorldObjects\Instances\NPCInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\ProjectileInstance.cs">
-      <Link>WorldObjects\Instances\ProjectileInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Instances\VobInstance.cs">
-      <Link>WorldObjects\Instances\VobInstance.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Item.cs">
-      <Link>WorldObjects\Item.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\ItemContainers\ItemContainer.cs">
-      <Link>WorldObjects\ItemContainers\ItemContainer.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\ItemContainers\ItemInventory.cs">
-      <Link>WorldObjects\ItemContainers\ItemInventory.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\ItemContainers\NPCInventory.cs">
-      <Link>WorldObjects\ItemContainers\NPCInventory.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Mob.cs">
-      <Link>WorldObjects\Mob.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\MobInter.cs">
-      <Link>WorldObjects\MobInter.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\NPC.cs">
-      <Link>WorldObjects\NPC.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Projectile.cs">
-      <Link>WorldObjects\Projectile.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\Vob.cs">
-      <Link>WorldObjects\Vob.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\VobGuiding\GuideCmd.cs">
-      <Link>WorldObjects\VobGuiding\GuideCmd.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\VobGuiding\GuidedVob.cs">
-      <Link>WorldObjects\VobGuiding\GuidedVob.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\World.cs">
-      <Link>WorldObjects\World.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\WorldGlobals\BarrierController.cs">
-      <Link>WorldObjects\WorldGlobals\BarrierController.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\WorldGlobals\SkyController.cs">
-      <Link>WorldObjects\WorldGlobals\SkyController.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\WorldGlobals\WeatherController.cs">
-      <Link>WorldObjects\WorldGlobals\WeatherController.cs</Link>
-    </Compile>
-    <Compile Include="..\GUCShared\WorldObjects\WorldGlobals\WorldClock.cs">
-      <Link>WorldObjects\WorldGlobals\WorldClock.cs</Link>
-    </Compile>
+    <Compile Include="Animations\ActiveAni.cs" />
+    <Compile Include="Animations\AniJob.cs" />
+    <Compile Include="Animations\Animation.cs" />
+    <Compile Include="Animations\FrameActionPair.cs" />
+    <Compile Include="Animations\Overlay.cs" />
+    <Compile Include="GameObjects\Collections\DynamicCollection.cs" />
+    <Compile Include="GameObjects\Collections\IDODictionary.cs" />
+    <Compile Include="GameObjects\Collections\StaticCollection.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\IDObject.cs" />
+    <Compile Include="GameTime.cs" />
+    <Compile Include="GUI\GUCPasswordTextBox.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\ModelInstance.cs" />
+    <Compile Include="Network\ClientMessages.cs" />
+    <Compile Include="Network\GameClient.cs" />
+    <Compile Include="Network\PacketEnums.cs" />
+    <Compile Include="Network\PacketReader.cs" />
+    <Compile Include="Network\PacketWriter.cs" />
+    <Compile Include="Network\ServerMessages.cs" />
+    <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Scripting\Timer.cs" />
+    <Compile Include="Types\Angles.cs" />
+    <Compile Include="Types\ColorRGBA.cs" />
+    <Compile Include="Types\NPCMovement.cs" />
+    <Compile Include="Types\PosAng.cs" />
+    <Compile Include="Types\Vec2i.cs" />
+    <Compile Include="Types\Vec3f.cs" />
+    <Compile Include="Types\VobTypes.cs" />
+    <Compile Include="Types\WeatherTypes.cs" />
+    <Compile Include="Types\WorldTime.cs" />
+    <Compile Include="Utilities\Alg.cs" />
+    <Compile Include="Utilities\BoolEvent.cs" />
+    <Compile Include="Utilities\ExtendedObject.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\LockTimer.cs" />
+    <Compile Include="Utilities\Randomizer.cs" />
+    <Compile Include="Utilities\ReadOnlyList.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\StructList.cs" />
+    <Compile Include="Utilities\Threading\AbstractRunnable.cs" />
+    <Compile Include="Utilities\Threading\Runnable.cs" />
+    <Compile Include="Utilities\XMLHelper.cs" />
+    <Compile Include="WorldObjects\BaseVob.cs" />
+    <Compile Include="WorldObjects\Collections\VobTypeObjectCollection.cs" />
+    <Compile Include="WorldObjects\Instances\BaseVobInstance.cs" />
+    <Compile Include="WorldObjects\Instances\ItemInstance.cs" />
+    <Compile Include="WorldObjects\Instances\MobInstance.cs" />
+    <Compile Include="WorldObjects\Instances\MobInterInstance.cs" />
+    <Compile Include="WorldObjects\Instances\NPCInstance.cs" />
+    <Compile Include="WorldObjects\Instances\ProjectileInstance.cs" />
+    <Compile Include="WorldObjects\Instances\VobInstance.cs" />
+    <Compile Include="WorldObjects\Item.cs" />
+    <Compile Include="WorldObjects\ItemContainers\ItemContainer.cs" />
+    <Compile Include="WorldObjects\ItemContainers\ItemInventory.cs" />
+    <Compile Include="WorldObjects\ItemContainers\NPCInventory.cs" />
+    <Compile Include="WorldObjects\Mob.cs" />
+    <Compile Include="WorldObjects\MobInter.cs" />
+    <Compile Include="WorldObjects\NPC.cs" />
+    <Compile Include="WorldObjects\Projectile.cs" />
+    <Compile Include="WorldObjects\Vob.cs" />
+    <Compile Include="WorldObjects\VobGuiding\GuideCmd.cs" />
+    <Compile Include="WorldObjects\VobGuiding\GuidedVob.cs" />
+    <Compile Include="WorldObjects\World.cs" />
+    <Compile Include="WorldObjects\WorldGlobals\BarrierController.cs" />
+    <Compile Include="WorldObjects\WorldGlobals\SkyController.cs" />
+    <Compile Include="WorldObjects\WorldGlobals\WeatherController.cs" />
+    <Compile Include="WorldObjects\WorldGlobals\WorldClock.cs" />
     <Compile Include="GothicGlobals.cs" />
     <Compile Include="GUI\GUCTextBox.cs" />
     <Compile Include="GUI\GUCView.cs" />

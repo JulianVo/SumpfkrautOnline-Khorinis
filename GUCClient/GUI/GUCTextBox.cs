@@ -49,14 +49,14 @@ namespace GUC.GUI
             }
         }
 
-        StringBuilder input = new StringBuilder();
+        readonly StringBuilder _Input = new StringBuilder();
         public string Input 
         { 
-            get { return input.ToString(); }
+            get { return _Input.ToString(); }
             set
             {
-                input.Clear();
-                input.Append(value);
+                _Input.Clear();
+                _Input.Append(value);
                 cursorPos = 0;
                 UpdateInputVisual();
             }
@@ -125,15 +125,15 @@ namespace GUC.GUI
             {
                 if (cursorPos > 0)
                 {
-                    input.Remove(cursorPos - 1, 1);
+                    _Input.Remove(cursorPos - 1, 1);
                     cursorPos--;
                 }
             }
             else if (key == VirtualKeys.Delete) //delete char in front of cursor
             {
-                if (input.Length > cursorPos)
+                if (_Input.Length > cursorPos)
                 {
-                    input.Remove(cursorPos, 1);
+                    _Input.Remove(cursorPos, 1);
                 }
             }
             else if (key == VirtualKeys.Left)
@@ -142,15 +142,15 @@ namespace GUC.GUI
             }
             else if (key == VirtualKeys.Right)
             {
-                if (input.Length > cursorPos) cursorPos++;
+                if (_Input.Length > cursorPos) cursorPos++;
             }
             else
             {
-                if (input.Length > CharacterLimit)
+                if (_Input.Length > CharacterLimit)
                     return;
 
                 string str = GetCharFromKey(key);
-                if (str == null || str.Length == 0)
+                if (string.IsNullOrEmpty(str))
                     return;
 
                 char c = str[0];
@@ -169,11 +169,27 @@ namespace GUC.GUI
                 if (fixedBorders && StringPixelWidth(Input) + GUCView.GetCharWidth(c) > width) //check if fixed borders are reached
                     return;
 
-                input.Insert(cursorPos, c);
-                cursorPos++;
+                //Allow inherited classes to manipulate or decline the input char before adding it.
+                if (OnCharInput(c,out  c))
+                {
+                    _Input.Insert(cursorPos, c);
+                    cursorPos++;
+                }
+
             }
             cursorVis.Show();
             UpdateInputVisual();
+        }
+
+        protected virtual bool OnCharInput(char inputChar, out char charOverwrite)
+        {
+            charOverwrite = inputChar;
+            return true;
+        }
+
+        protected virtual string OnUpdateVisualString(string displayString)
+        {
+            return displayString;
         }
 
         void UpdateInputVisual()
@@ -184,7 +200,7 @@ namespace GUC.GUI
                 sub = HideChars;
             }
 
-            string substractedText = Input.Substring(sub);
+            string substractedText = OnUpdateVisualString(Input).Substring(sub);
             inputText.Text = substractedText;
             int cursorLen = (int)StringPixelWidth(substractedText.Substring(0,cursorPos - sub));
             int inputLen = (int)StringPixelWidth(substractedText);

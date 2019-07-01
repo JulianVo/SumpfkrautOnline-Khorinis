@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Gothic.Types;
 using Gothic.View;
+using GUC.Log;
 using GUC.Scripts.Sumpfkraut.Menus;
 
 namespace GUC.Scripts.Sumpfkraut.WorldSystem
@@ -22,11 +23,13 @@ namespace GUC.Scripts.Sumpfkraut.WorldSystem
 
             zCViewProgressBar progBar = ogame.ProgressBar;
             if (progBar.Address != 0) progBar.SetPercent(0);
+            Logger.LogWarning($"Clearing GameState");
             ogame.ClearGameState();
 
             progBar = ogame.ProgressBar;
             if (progBar.Address != 0) progBar.SetRange(0, 92);
 
+            Logger.LogWarning($"Loading world {Path}");
             ogame.LoadWorld(true, Path);
 
             progBar = ogame.ProgressBar;

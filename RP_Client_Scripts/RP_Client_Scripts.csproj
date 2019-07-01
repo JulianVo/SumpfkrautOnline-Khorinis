@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{78B839D0-E5A6-421D-ADA2-85CE19ECAC77}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GUC.Scripts</RootNamespace>
+    <AssemblyName>RP_Client_Scripts</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\GothicII\Scripts\</OutputPath>
+    <OutputPath>..\bin\localhost-9054\Scripts\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;D_CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\GothicII\Scripts\</OutputPath>
+    <OutputPath>..\bin\localhost-9054\Scripts\</OutputPath>
+    <DefineConstants>TRACE;D_CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Costura, Version=4.0.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.4.0.0\lib\net40\Costura.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>..\Sqlite\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\AccountCreation.cs" />
+    <Compile Include="Account\AccountCreationMessageWriter.cs" />
+    <Compile Include="Account\AccountCreationFailedArgs.cs" />
+    <Compile Include="AllConstructorFinder.cs" />
+    <Compile Include="Character\Character.cs" />
+    <Compile Include="Character\CharacterCreation.cs" />
+    <Compile Include="Character\CharacterCreationFailedArgs.cs" />
+    <Compile Include="Character\CharacterList.cs" />
+    <Compile Include="Character\CharCreationInfo.cs" />
+    <Compile Include="Character\HumanCharacter.cs" />
+    <Compile Include="Character\HumanCharacterVisuals.cs" />
+    <Compile Include="Character\NonHumanCharacter.cs" />
+    <Compile Include="Chat\ChatMessageReceivedArgs.cs" />
+    <Compile Include="Chat\ChatMode.cs" />
+    <Compile Include="Menus\AccountCreationGUI\AccountCreationMenuEventWiring.cs" />
+    <Compile Include="Menus\CharacterLoadingEventWiring.cs" />
+    <Compile Include="Menus\CharacterSelectionMenu\CharacterSelectionMenuEventWiring.cs" />
+    <Compile Include="Menus\IngameMenuGUI\InGameMenuWiring.cs" />
+    <Compile Include="Menus\LoginGUI\LoginMenuWiring.cs" />
+    <Compile Include="Logging\GucLogger.cs" />
+    <Compile Include="Logging\GucLoggerFactory.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\ILoggerFactory.cs" />
+    <Compile Include="Login\Login.cs" />
+    <Compile Include="Login\LoginAcknowledgedArgs.cs" />
+    <Compile Include="Login\LoginDeniedArgs.cs" />
+    <Compile Include="Menus\AccountCreationGUI\AccountCreationMenu.cs" />
+    <Compile Include="Menus\CharacterCreationGUI\CharacterCreationCompletedArgs.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="Menus\CharacterCreationGUI\CharCreationMenuEventWiring.cs" />
+    <Compile Include="Menus\ExitGUI\ExitMenuEventWiring.cs" />
+    <Compile Include="GUCScripts.cs" />
+    <Compile Include="Menus\MainMenuGUI\MainMenuEventWiring.cs" />
+    <Compile Include="Menus\CharacterSelectionMenu\CharacterSelectionMenu.cs" />
+    <Compile Include="Menus\IngameMenuGUI\InGameMenu.cs" />
+    <Compile Include="Menus\LoginGUI\CredentialsEnteredArgs.cs" />
+    <Compile Include="Menus\IClosableMenu.cs" />
+    <Compile Include="Menus\LoginGUI\LoginMenu.cs" />
+    <Compile Include="Menus\WaitScreen.cs" />
+    <Compile Include="Menus\MenuWithViewBlocker.cs" />
+    <Compile Include="NpcDefList.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\CommandType.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToPosCommand.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToVobCommand.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToVobLookAtCommand.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\AccountCreationResultMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\CharListRequestSender.cs" />
+    <Compile Include="Sumpfkraut\Networking\IPacketWriterFactory.cs" />
+    <Compile Include="Sumpfkraut\Networking\IScriptMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\IScriptMessageHandlerSelector.cs" />
+    <Compile Include="Sumpfkraut\Networking\LeaveGameSender.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterCreationResultMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterListReceivedArgs.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterListResultMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterVisualsReader.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\LoginAcknowledgedMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\LoginDeniedMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\LoginFailedArgs.cs" />
+    <Compile Include="Sumpfkraut\Networking\LoginPacketWriter.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\LogoutAcknowledgeMessageHandler.cs" />
+    <Compile Include="Sumpfkraut\Networking\PacketWriterFactory.cs" />
+    <Compile Include="Sumpfkraut\Networking\ScriptClient.cs" />
+    <Compile Include="Sumpfkraut\Networking\ScriptMessageHandlerSelector.cs" />
+    <Compile Include="Sumpfkraut\Networking\ScriptMessageSender.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\ItemMaterials.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\ItemTypes.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Allegiance.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ClimbMoves.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\FightMoves.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\JumpMoves.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\NPCSlots.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Unconsciousness.cs" />
+    <Compile Include="Utilities\ArrayUtil.cs" />
+    <Compile Include="Utilities\DateTimeUtil.cs" />
+    <Compile Include="Sumpfkraut\Utilities\Functions\Enumeration\InvocationType.cs" />
+    <Compile Include="Utilities\Functions\FunctionManager.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\IManagerInteraction.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_Add.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_AddRange.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_Clear.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_Remove.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_RemoveExceptTimeRange.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_RemoveInTimeRange.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_RemoveRange.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_Replace.cs" />
+    <Compile Include="Utilities\Functions\ManagerInteraction\MI_ReplaceRange.cs" />
+    <Compile Include="Utilities\Functions\TimedFunction.cs" />
+    <Compile Include="Utilities\ListUtil.cs" />
+    <Compile Include="Utilities\StringUtil.cs" />
+    <Compile Include="Sumpfkraut\Utilities\TestVariable.cs" />
+    <Compile Include="Sumpfkraut\Visuals\ModelDef.cs" />
+    <Compile Include="Sumpfkraut\Visuals\ModelInst.cs" />
+    <Compile Include="Sumpfkraut\Visuals\ScriptAni.cs" />
+    <Compile Include="Sumpfkraut\Visuals\ScriptAniJob.cs" />
+    <Compile Include="Sumpfkraut\Visuals\ScriptOverlay.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\BaseVobDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\ItemDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\Mobs\MobDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\NamedVobDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\NPCDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\ProjDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\VobDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Enumeration\VoiceCmd.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\BaseVobInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ItemContainers\ScriptInventory.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ItemInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Mobs\MobInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\NamedVobInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\NPCInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ProjInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\VobInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\VobTypes.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\ScriptBarrierCtrl.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\ScriptClock.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\ScriptWeatherCtrl.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\WorldDef.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\WorldInst.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\WorldLoader.cs" />
+    <Compile Include="Chat\Chat.Client.cs" />
+    <Compile Include="Controls\ArenaControl.cs" />
+    <Compile Include="Menus\CharacterCreationGUI\CharCreationMenu.cs" />
+    <Compile Include="Chat\ChatMenu.cs" />
+    <Compile Include="Menus\ExitGUI\ExitMenu.cs" />
+    <Compile Include="Menus\MainMenuGUI\MainMenu.cs" />
+    <Compile Include="Menus\PlayerList.cs" />
+    <Compile Include="Menus\StatusMenu.cs" />
+    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToPosCommand.Client.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToVobCommand.Client.cs" />
+    <Compile Include="Sumpfkraut\AI\GuideCommands\GoToVobLookAtCommand.Client.cs" />
+    <Compile Include="Sumpfkraut\Controls\KeyBinds.cs" />
+    <Compile Include="Sumpfkraut\Controls\KeyDictionary.cs" />
+    <Compile Include="Sumpfkraut\Controls\KeyHoldHelper.cs" />
+    <Compile Include="Sumpfkraut\Controls\PlayerFocus.cs" />
+    <Compile Include="Sumpfkraut\GUI\GUCInventory.cs" />
+    <Compile Include="Sumpfkraut\GUI\GUCTextLines.cs" />
+    <Compile Include="Sumpfkraut\GUI\GUCWorldSprite.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuButton.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuCharacter.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuCharSlot.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuChoice.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuItem.cs" />
+    <Compile Include="Sumpfkraut\GUI\MainMenu\MainMenuTextBox.cs" />
+    <Compile Include="Sumpfkraut\Controls\InputControl.cs" />
+    <Compile Include="Sumpfkraut\Menus\ScreenScrollText.cs" />
+    <Compile Include="Sumpfkraut\Menus\AnimationMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\DropItemMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\GUCMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\CharCreationMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\CharSelMenu.cs" />
+    <Compile Include="Sumpfkraut\Networking\Requests\NPCRequestSender.cs" />
+    <Compile Include="Sumpfkraut\Options\ClientOptions.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\Mobs\MobDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Mobs\MobInst.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ProjInst.Client.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\ExitMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\GUCMainMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\HelpChatMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\HelpMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\HelpRPMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\LoginMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\MainMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\PlayerlistMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\MainMenus\RegisterMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\PlayerInventory.cs" />
+    <Compile Include="Sumpfkraut\Menus\StatusMenu.cs" />
+    <Compile Include="Sumpfkraut\Menus\TradeMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\BaseVobDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\ItemDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\NPCDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\VobDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\ItemInst.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\NPCInst.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\VobInst.Client.cs" />
+    <Compile Include="Sumpfkraut\WorldSystem\WorldInst.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\Mobs\MobInterDef.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Mobs\MobInterInst.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Definitions\Mobs\MobInterDef.Client.cs" />
+    <Compile Include="Sumpfkraut\VobSystem\Instances\Mobs\MobInterInst.Client.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GUCClient\GUCClient.csproj">
+      <Project>{c670ca0d-f27b-4745-9b76-b06882052e6b}</Project>
+      <Name>GUCClient</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Gothic\Gothic.csproj">
+      <Project>{82655f73-cf7c-4416-9313-bd657ad8f05f}</Project>
+      <Name>Gothic</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RP_Shared_Script\RP_Shared_Script.csproj">
+      <Project>{a072c908-bb56-404a-b660-679e62e47500}</Project>
+      <Name>RP_Shared_Script</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinApi\WinApi.csproj">
+      <Project>{52793b3f-130c-4b05-8333-1529981de780}</Project>
+      <Name>WinApi</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RP\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.5.0.6\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.5.0.6\build\Fody.targets'))" />
+  </Target>
+  <Import Project="..\packages\Fody.5.0.6\build\Fody.targets" Condition="Exists('..\packages\Fody.5.0.6\build\Fody.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

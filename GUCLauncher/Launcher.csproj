@@ -66,9 +66,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\GUCShared\LangStrings.cs">
-      <Link>LangStrings.cs</Link>
-    </Compile>
     <Compile Include="GothicStarter.cs" />
     <Compile Include="InfoBox.xaml.cs">
       <DependentUpon>InfoBox.xaml</DependentUpon>
@@ -76,6 +73,7 @@
     <Compile Include="InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LangString.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

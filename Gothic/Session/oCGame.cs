@@ -162,5 +162,15 @@ namespace Gothic.Session
         {
             get { return new zCViewProgressBar(Process.ReadInt(Address + VarOffsets.progressBar)); }
         }
+
+        public void CheckObjectConsistency()
+        {
+            Process.THISCALL<NullReturnCall>(Address, 0x6C5B50,(IntArg)1);
+        }
+
+        public oCSpawnManager GetSpawnManager()
+        {
+            return Process.THISCALL<oCSpawnManager>(Address, 0x06C2D00);
+        }
     }
 }

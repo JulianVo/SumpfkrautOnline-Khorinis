@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CGameManager.cs" />
+    <Compile Include="Music\zCMusicSys_DirectMusic.cs" />
     <Compile Include="Objects\EventManager\oCMsgMovement.cs" />
     <Compile Include="Objects\EventManager\oCNpcMessage.cs" />
     <Compile Include="Objects\Meshes\zCMaterial.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Objects\zCCollisionObject.cs" />
     <Compile Include="Objects\zCVobLight.cs" />
     <Compile Include="Objects\zCWorld.cs" />
+    <Compile Include="oCSpawnManager.cs" />
     <Compile Include="Session\zCSession.cs" />
     <Compile Include="Sound\zCSndFX_MSS.cs" />
     <Compile Include="Sound\zTSound3DParams.cs" />
