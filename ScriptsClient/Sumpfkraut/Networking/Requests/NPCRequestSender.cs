@@ -7,6 +7,7 @@ using GUC.Scripts.Sumpfkraut.VobSystem.Instances;
 using GUC.WorldObjects;
 using GUC.Utilities;
 using GUC.Types;
+using GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs;
 
 namespace GUC.Scripts.Sumpfkraut.Networking.Requests
 {
@@ -68,6 +69,21 @@ namespace GUC.Scripts.Sumpfkraut.Networking.Requests
             var stream = npc.BaseInst.GetScriptCommandStream();
             stream.Write((byte)RequestMessageIDs.UseItem);
             stream.Write((ushort)item.ID);
+            NPC.SendScriptCommand(stream, NetPriority.Low);
+        }
+
+        public void StartUseMob(NPCInst npc, MobInst mobInst)
+        {
+            var stream = npc.BaseInst.GetScriptCommandStream();
+            stream.Write((byte)RequestMessageIDs.StartUseMob);
+            stream.Write((ushort)mobInst.ID);
+            NPC.SendScriptCommand(stream, NetPriority.Low);
+        }
+
+        public void StopUseMob(NPCInst npc)
+        {
+            var stream = npc.BaseInst.GetScriptCommandStream();
+            stream.Write((byte)RequestMessageIDs.StopUseMob);
             NPC.SendScriptCommand(stream, NetPriority.Low);
         }
 

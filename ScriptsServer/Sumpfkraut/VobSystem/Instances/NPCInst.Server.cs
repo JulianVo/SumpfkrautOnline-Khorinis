@@ -9,13 +9,12 @@ using GUC.Types;
 using System;
 using GUC.Utilities;
 using GUC.Scripts.Sumpfkraut.VobSystem.Enumeration;
+using GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs;
 
 namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
 {
     public partial class NPCInst
     {
-        const int MaxNPCCorpses = 100;
-
         public static readonly Networking.Requests.NPCRequestReceiver Requests = new Networking.Requests.NPCRequestReceiver();
 
         public delegate void NPCInstMoveHandler(NPCInst npc, Vec3f oldPos, Angles oldAng, NPCMovement oldMovement);
@@ -705,14 +704,13 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
             }
         }
         #endregion
-
-        static DespawnList<NPCInst> npcDespawnList = new DespawnList<NPCInst>(MaxNPCCorpses);
-
+        
         partial void pSetHealth(int hp, int hpmax)
         {
             if (hp <= 0)
             {
-                npcDespawnList.AddVob(this);
+                if (this.IsSpawned && !this.IsPlayer)
+                    this.World.DespawnList_NPC.AddVob(this);
 
                 if (unconTimer != null && unconTimer.Started)
                     unconTimer.Stop();
@@ -1061,6 +1059,33 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
 
             ChugPotion(item);
         }
+
+        #region Mob using
+        public void StartUseMob(MobInst mobInst)
+        {
+            // todo: any further checks?
+            // currently distance to mob is checked clientside only
+            if (mobInst.HasRequirements(this))
+            {
+                mobInst.StartUsing(this);
+                IsUsingMob = true;
+                UsedMob = mobInst;
+                var strm = this.BaseInst.GetScriptVobStream();
+                strm.Write((byte)ScriptVobMessageIDs.StartUsingMob);
+                strm.Write((ushort)mobInst.ID);
+                this.BaseInst.SendScriptVobStream(strm);
+            }
+        }
+
+        public void StopUseMob()
+        {
+            UsedMob.StopUsing(this);
+            IsUsingMob = true;
+            var strm = this.BaseInst.GetScriptVobStream();
+            strm.Write((byte)ScriptVobMessageIDs.StopUsingMob);
+            this.BaseInst.SendScriptVobStream(strm);
+        }
+        #endregion
 
         void ChugPotion(ItemInst item)
         {

@@ -12,6 +12,7 @@ using GUC.Types;
 using GUC.WorldObjects.ItemContainers;
 using GUC.Scripts.Sumpfkraut.EffectSystem.EffectHandlers;
 using GUC.Scripts.Sumpfkraut.WorldSystem;
+using GUC.Scripts.Sumpfkraut.VobSystem.Instances.Mobs;
 
 namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
 {
@@ -69,6 +70,7 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
         partial void pConstruct();
         public NPCInst()
         {
+            IsUsingMob = false;
             pConstruct();
         }
 
@@ -86,6 +88,8 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
 
         #region Properties
 
+        public override VobType VobType { get { return VobType.NPC; } }
+
         new public NPCInstEffectHandler EffectHandler { get { return (NPCInstEffectHandler)base.EffectHandler; } }
 
         new public NPC BaseInst { get { return (NPC)base.BaseInst; } }
@@ -99,6 +103,8 @@ namespace GUC.Scripts.Sumpfkraut.VobSystem.Instances
 
         public bool IsDead { get { return this.BaseInst.IsDead; } }
         public bool IsInFightMode { get { return this.BaseInst.IsInFightMode; } }
+        public bool IsUsingMob { get; set; }
+        public MobInst UsedMob { get; set; }
 
         public bool IsWading
         {
