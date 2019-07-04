@@ -125,7 +125,6 @@
     <Compile Include="Client\ClientList.cs" />
     <Compile Include="Client\IClientFactory.cs" />
     <Compile Include="Network\ScriptMessages\JoinGameScriptMessageHandler.cs" />
-    <Compile Include="Network\ScriptMessages\SpectateScriptMessageHandler.cs" />
     <Compile Include="WorldSystem\DoNothingBarrierControl.cs" />
     <Compile Include="WorldSystem\WorldList.cs" />
     <Compile Include="GUCScripts.cs" />

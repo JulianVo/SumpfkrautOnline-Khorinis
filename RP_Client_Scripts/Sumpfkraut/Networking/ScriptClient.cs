@@ -143,11 +143,6 @@ namespace GUC.Scripts.Sumpfkraut.Networking
             _MessageSender.SendScriptMessage(stream, NetPriority.Low, NetReliability.Reliable);
         }
 
-        public void SendSpectateMessage()
-        {
-            var stream = _WriterFactory.Create(ScriptMessages.Spectate);
-            _MessageSender.SendScriptMessage(stream, NetPriority.Low, NetReliability.Reliable);
-        }
 
         void ReadGameInfo(PacketReader stream)
         {

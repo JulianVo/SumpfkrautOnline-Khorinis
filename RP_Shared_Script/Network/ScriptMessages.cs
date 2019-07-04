@@ -4,10 +4,6 @@
     {
         GameInfo,
 
-        JoinGame,
-        LeaveGame,
-        Spectate,
-
         //Chat
         ChatMessage,
         ChatTeamMessage,
@@ -38,6 +34,9 @@
         CreateCharacter,
         CharacterCreationResult,
 
-
+        //Join Game
+        JoinGame,
+        JoinGameResult,
+        LeaveGame,
     }
 }

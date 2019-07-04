@@ -67,7 +67,6 @@ namespace RP_Server_Scripts
             //Script message handler
             builder.RegisterType<ChatScriptMessageHandler>().As<IScriptMessageHandler>().SingleInstance();
             builder.RegisterType<ScriptMessageHandlerSelector>().As<IScriptMessageHandlerSelector>().SingleInstance();
-            builder.RegisterType<SpectateScriptMessageHandler>().As<IScriptMessageHandler>().SingleInstance();
             builder.RegisterType<LeaveGameMessageHandler>().As<IScriptMessageHandler>().SingleInstance();
 
             builder.RegisterType<ClientFactory>().As<IClientFactory>().SingleInstance();
