@@ -1,10 +1,7 @@
-﻿using System;
-using GUC.GUI;
-using GUC.Scripts.Sumpfkraut.GUI.MainMenu;
-using GUC.Types;
+﻿using GUC.Scripts.Sumpfkraut.GUI.MainMenu;
 using RP_Shared_Script;
 
-namespace GUC.Scripts.Menus
+namespace GUC.Scripts.Menus.LoginGUI
 {
     internal sealed class LoginMenu : MenuWithViewBlocker
     {
@@ -13,7 +10,6 @@ namespace GUC.Scripts.Menus
 
         private MainMenuTextBox _TbName;
         private MainMenuTextBox _TbPw;
-        private GUCVisualText _LbErrorText;
 
         protected override void OnCreate()
         {
@@ -32,26 +28,11 @@ namespace GUC.Scripts.Menus
 
             AddButton("Account erstellen", "Einen neuen Account erstellen", 400, () => CreateAccountSelected?.Invoke(this));
 
-
-            _LbErrorText = Back.CreateTextCenterX("", 350);
-            _LbErrorText.SetColor(ColorRGBA.Red);
         }
 
         private void OnActivate()
         {
-            if (string.IsNullOrWhiteSpace(_TbName.Input) || string.IsNullOrWhiteSpace(_TbPw.Input))
-            {
-                SetErrorText("Accountname und Password eingegeben.");
-            }
-            else
-            {
-                CredentialsEntered?.Invoke(this, new CredentialsEnteredArgs(_TbName.Input, _TbPw.Input));
-            }
-        }
-
-        public void SetErrorText(string errorText)
-        {
-            _LbErrorText.Text = errorText ?? throw new ArgumentNullException(nameof(errorText));
+            CredentialsEntered?.Invoke(this, new CredentialsEnteredArgs(_TbName.Input, _TbPw.Input));
         }
 
         public string UserName

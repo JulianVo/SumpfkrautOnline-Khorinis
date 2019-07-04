@@ -9,10 +9,12 @@ using GUC.Scripts.Character;
 using GUC.Scripts.GuiEventWiring;
 using GUC.Scripts.Logging;
 using GUC.Scripts.Menus;
-using GUC.Scripts.Menus.AccountCreationMenu;
+using GUC.Scripts.Menus.AccountCreationGUI;
 using GUC.Scripts.Menus.CharacterCreationGUI;
 using GUC.Scripts.Menus.CharacterSelectionMenu;
+using GUC.Scripts.Menus.ErrorScreenGUI;
 using GUC.Scripts.Menus.IngameMenu;
+using GUC.Scripts.Menus.LoginGUI;
 using GUC.Scripts.Sumpfkraut.VobSystem;
 using GUC.Scripts.Sumpfkraut.Visuals;
 using GUC.Scripts.Sumpfkraut.VobSystem.Instances;
@@ -31,7 +33,7 @@ using GUC.WorldObjects;
 using RP_Server_Scripts.Autofac;
 using RP_Shared_Script;
 using ExitMenu = GUC.Scripts.Arena.Menus.ExitMenu;
-using LoginMenu = GUC.Scripts.Menus.LoginMenu;
+using LoginMenu = GUC.Scripts.Menus.LoginGUI.LoginMenu;
 using MainMenu = GUC.Scripts.Menus.MainMenu;
 using StatusMenu = GUC.Scripts.Arena.Menus.StatusMenu;
 
@@ -67,8 +69,9 @@ namespace GUC.Scripts
             builder.RegisterType<CharacterCreation>().AsSelf().SingleInstance();
             builder.RegisterType<NpcDefList>().AsSelf().SingleInstance();
             builder.RegisterType<CharacterVisualsReader>().AsSelf().SingleInstance();
+            builder.RegisterType<JoinGameSender>().AsSelf().SingleInstance();
+            builder.RegisterType<ErrorScreenManager>().AsSelf().SingleInstance();
             
-
 
             //Message handling
             builder.RegisterType<ScriptMessageHandlerSelector>().As<IScriptMessageHandlerSelector>().SingleInstance();
@@ -78,6 +81,7 @@ namespace GUC.Scripts
             builder.RegisterType<AccountCreationResultMessageHandler>().As<IScriptMessageHandler>().AsSelf().SingleInstance();
             builder.RegisterType<CharacterCreationResultMessageHandler>().As<IScriptMessageHandler>().AsSelf().SingleInstance();
             builder.RegisterType<CharacterListResultMessageHandler>().As<IScriptMessageHandler>().AsSelf().SingleInstance();
+            builder.RegisterType<JoinGameResultMessageHandler>().As<IScriptMessageHandler>().AsSelf().SingleInstance();
 
             //GUI Menus
             builder.RegisterType<CharCreationMenu>().AsSelf().As<IClosableMenu>().SingleInstance();
@@ -90,8 +94,8 @@ namespace GUC.Scripts
             builder.RegisterType<InGameMenu>().AsSelf().As<IClosableMenu>().SingleInstance();
             builder.RegisterType<AccountCreationMenu>().AsSelf().As<IClosableMenu>().SingleInstance();
             builder.RegisterType<CharacterSelectionMenu>().AsSelf().As<IClosableMenu>().SingleInstance();
-
-
+            builder.RegisterType<ErrorScreen>().AsSelf().As<IClosableMenu>().SingleInstance();
+            
             //Register event wiring classes used to wire the events between GUI views without circular references(and other bad stuff).
             builder.RegisterType<MainMenuEventWiring>().AsSelf().SingleInstance().AutoActivate();
             builder.RegisterType<ExitMenuEventWiring>().AsSelf().SingleInstance().AutoActivate();

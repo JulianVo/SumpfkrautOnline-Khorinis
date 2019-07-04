@@ -68,12 +68,15 @@
     <Compile Include="Character\CharCreationInfo.cs" />
     <Compile Include="Character\HumanCharacter.cs" />
     <Compile Include="Character\HumanCharacterVisuals.cs" />
+    <Compile Include="Character\JoinGameSender.cs" />
     <Compile Include="Character\NonHumanCharacter.cs" />
     <Compile Include="Chat\ChatMessageReceivedArgs.cs" />
     <Compile Include="Chat\ChatMode.cs" />
     <Compile Include="Menus\AccountCreationGUI\AccountCreationMenuEventWiring.cs" />
     <Compile Include="Menus\CharacterLoadingEventWiring.cs" />
     <Compile Include="Menus\CharacterSelectionMenu\CharacterSelectionMenuEventWiring.cs" />
+    <Compile Include="Menus\ErrorScreenGUI\ErrorScreen.cs" />
+    <Compile Include="Menus\ErrorScreenGUI\ErrorScreenManager.cs" />
     <Compile Include="Menus\IngameMenuGUI\InGameMenuWiring.cs" />
     <Compile Include="Menus\LoginGUI\LoginMenuWiring.cs" />
     <Compile Include="Logging\GucLogger.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterListReceivedArgs.cs" />
     <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterListResultMessageHandler.cs" />
     <Compile Include="Sumpfkraut\Networking\MessageHandler\CharacterListResultMessage\CharacterVisualsReader.cs" />
+    <Compile Include="Sumpfkraut\Networking\MessageHandler\JoinGameResultMessageHandler.cs" />
     <Compile Include="Sumpfkraut\Networking\MessageHandler\LoginAcknowledgedMessageHandler.cs" />
     <Compile Include="Sumpfkraut\Networking\MessageHandler\LoginDeniedMessageHandler.cs" />
     <Compile Include="Sumpfkraut\Networking\LoginFailedArgs.cs" />

@@ -1,23 +1,13 @@
 ﻿using System;
 
-namespace GUC.Scripts.Menus
+namespace GUC.Scripts.Menus.LoginGUI
 {
     internal sealed class CredentialsEnteredArgs
     {
         public CredentialsEnteredArgs(string userName, string password)
         {
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                throw new ArgumentException(@"Value cannot be null or whitespace.", nameof(userName));
-            }
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException(@"Value cannot be null or whitespace.", nameof(password));
-            }
-
-            UserName = userName;
-            Password = password;
+            UserName = userName ?? throw new ArgumentNullException(nameof(userName));
+            Password = password ?? throw new ArgumentNullException(nameof(password));
         }
 
         public string UserName { get; }

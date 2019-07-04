@@ -88,8 +88,16 @@ namespace GUC.Scripts.Menus.CharacterSelectionMenu
 
         public override void Open()
         {
-            SetCursor(0);
             base.Open();
+
+            SetCursor(0);
+
+            //No characters available for display, hide the character model(do not show the default model).
+            if (_Characters.Length == 0)
+            {
+                _CharacterDisplay.Hide();
+                _CharacterNameText.Hide();
+            }
         }
 
 

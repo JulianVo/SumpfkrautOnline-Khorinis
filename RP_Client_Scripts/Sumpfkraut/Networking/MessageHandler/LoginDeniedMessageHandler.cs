@@ -2,6 +2,7 @@
 using GUC.Network;
 using GUC.Scripts.Logging;
 using RP_Shared_Script;
+using RP_Shared_Script.Login;
 
 namespace GUC.Scripts.Sumpfkraut.Networking
 {

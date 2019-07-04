@@ -157,45 +157,7 @@ namespace GUC.Scripts.Sumpfkraut.Menus.MainMenus
             Items.Add(c);
             return c;
         }
-        /*
-        protected CharListHandle AddCharList(int x, int y, int lines, MainMenuCharacter character, Action OnCharSelect, Action OnEmptySelect)
-        {
-            MainMenuCharSlot[] arr = new MainMenuCharSlot[lines];
-            CharListHandle handle = new CharListHandle(arr);
-            for (int i = 0; i < lines; i++)
-            {
-                arr[i] = new MainMenuCharSlot(i, pos[0] + x, pos[1] + y + GUCView.FontsizeDefault * i, character, OnCharSelect, OnEmptySelect);
-            }
-            items.AddRange(arr);
-            return handle;
-        }
-
-        protected class CharListHandle
-        {
-            MainMenuCharSlot[] slots;
-            public CharListHandle(MainMenuCharSlot[] items)
-            {
-                this.slots = items;
-            }
-
-            public void Fill(AccCharInfo[] infos)
-            {
-                for (int i = 0; i < slots.Length; i++)
-                    slots[i].SetInfo(Array.Find(infos, info => info.SlotNum == i));
-            }
-
-            public int GetSlotNum(MainMenuItem slot)
-            {
-                if (slot is MainMenuCharSlot)
-                {
-                    return ((MainMenuCharSlot)slot).SlotNum;
-                }
-                return -1;
-            }
-        }
-
-        #endregion
-        */
+    
         protected MainMenuChoice AddChoice(string title, string help, int x, int y, Dictionary<int, string> choices, bool sorted, Action OnActivate, Action OnChange)
         {
             var c = new MainMenuChoice(title, help, pos[0] + x, pos[1] + y, choices, sorted, OnActivate, OnChange);
@@ -238,6 +200,8 @@ namespace GUC.Scripts.Sumpfkraut.Menus.MainMenus
                     CurrentItem.Select();
                     UpdateHelpText();
                 }
+
+                CursorChanged?.Invoke(this);
             }
         }
 
@@ -248,7 +212,15 @@ namespace GUC.Scripts.Sumpfkraut.Menus.MainMenus
 
         protected void MoveCursor(bool up)
         {
-            CurrentItem.Deselect();
+            //We do not have any items so we can not change the selected item.
+            if ((Items?.Count ?? 0) <= 0)
+            {
+                return;
+            }
+
+            CurrentItem?.Deselect();
+
+
             for (int i = 0; i < Items.Count; i++)
             {
                 if (up)

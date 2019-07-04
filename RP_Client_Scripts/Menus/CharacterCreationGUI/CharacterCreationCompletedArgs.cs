@@ -1,6 +1,7 @@
 ﻿using System;
+using GUC.Scripts.Arena;
 
-namespace GUC.Scripts.Arena.Menus
+namespace GUC.Scripts.Menus.CharacterCreationGUI
 {
     internal sealed class CharacterCreationCompletedArgs
     {

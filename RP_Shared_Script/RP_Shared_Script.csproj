@@ -47,6 +47,7 @@
     <Compile Include="Character\HumVoices.cs" />
     <Compile Include="GermanNameValidator.cs" />
     <Compile Include="ICharacterNameValidator.cs" />
+    <Compile Include="JoinGameFailedReason.cs" />
     <Compile Include="Login\LoginFailedReason.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestMessageIDs.cs" />

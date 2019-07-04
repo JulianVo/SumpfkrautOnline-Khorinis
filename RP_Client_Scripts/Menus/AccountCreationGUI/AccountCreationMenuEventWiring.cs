@@ -1,8 +1,7 @@
 ﻿using GUC.Scripts.Account;
-using GUC.Scripts.Menus;
-using GUC.Scripts.Menus.AccountCreationMenu;
+using GUC.Scripts.Menus.LoginGUI;
 
-namespace GUC.Scripts.GuiEventWiring
+namespace GUC.Scripts.Menus.AccountCreationGUI
 {
     internal sealed class AccountCreationMenuEventWiring
     {

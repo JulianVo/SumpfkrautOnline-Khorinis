@@ -10,13 +10,13 @@ namespace GUC.Scripts.Menus
     {
         public event GenericEventHandler<MainMenu> CharacterSelectionSelected;
         public event GenericEventHandler<MainMenu> CharacterCreationSelected;
-        public event GenericEventHandler<MainMenu> FreeForAllSelected;
+        public event GenericEventHandler<MainMenu> JoinGameSelected;
         public event GenericEventHandler<MainMenu> ExitGameSelected;
         public event GenericEventHandler<MainMenu> BackToLoginSelected;
 
         private readonly MainMenuCharacter _Character;
         private readonly GUCVisualText _CharacterNameText;
-
+        private bool _DisplayCharacterIsHidden;
 
         public MainMenu()
         {
@@ -32,7 +32,7 @@ namespace GUC.Scripts.Menus
             Back.SetPos(posX, posY);
             Back.SetSize(width, height);
 
-            AddButton("Welt betreten", "Die Spielwelt mit dem gewählten Character betreten.", 50, () => FreeForAllSelected?.Invoke(this));
+            AddButton("Welt betreten", "Die Spielwelt mit dem gewählten Character betreten.", 50, () => JoinGameSelected?.Invoke(this));
             AddButton("Charakter wählen", "Wähle deinen Spielcharakter.", 100, () => CharacterSelectionSelected?.Invoke(this));
             AddButton("Charakter erstellen", "Erstelle einen Spielcharakter", 150, () => CharacterCreationSelected?.Invoke(this));
             AddButton("Logout", "Zurück zum Login Menü", 200, () => BackToLoginSelected?.Invoke(this));
@@ -76,12 +76,23 @@ namespace GUC.Scripts.Menus
                 _Character.SetScale(new Types.Vec3f(1.0f, 1.0f, 1.0f));
             }
 
+            _DisplayCharacterIsHidden = false;
         }
 
         public void HideDisplayCharacter()
         {
             _Character.Hide();
             _CharacterNameText.Hide();
+            _DisplayCharacterIsHidden = true;
+        }
+
+        public override void Open()
+        {
+            base.Open();
+            if (_DisplayCharacterIsHidden)
+            {
+                HideDisplayCharacter();
+            }
         }
     }
 }

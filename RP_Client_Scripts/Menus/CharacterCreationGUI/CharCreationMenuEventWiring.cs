@@ -1,13 +1,17 @@
 ﻿using GUC.Scripts.Character;
-using GUC.Scripts.Menus;
-using GUC.Scripts.Menus.CharacterCreationGUI;
-using GUC.Scripts.Sumpfkraut.Networking;
+using GUC.Scripts.Menus.ErrorScreenGUI;
 
-namespace GUC.Scripts.GuiEventWiring
+namespace GUC.Scripts.Menus.CharacterCreationGUI
 {
     internal sealed class CharCreationMenuEventWiring
     {
-        public CharCreationMenuEventWiring(CharCreationMenu charCreationMenu, MainMenu mainMenu, ScriptClient client, CharacterCreation characterCreation, WaitScreen waitScreen, CharacterList characterList)
+        public CharCreationMenuEventWiring(
+            CharCreationMenu charCreationMenu,
+            MainMenu mainMenu,
+            CharacterCreation characterCreation,
+            WaitScreen waitScreen,
+            CharacterList characterList,
+            ErrorScreenManager errorScreenManager)
         {
             charCreationMenu.CharacterCreationCompleted += (sender, args) =>
             {
@@ -20,8 +24,8 @@ namespace GUC.Scripts.GuiEventWiring
             characterCreation.CharacterCreationFailed += (sender, args) =>
             {
                 charCreationMenu.SetHelpText(args.ReasonText);
-                charCreationMenu.Open();
                 waitScreen.Close();
+                errorScreenManager.ShowError(args.ReasonText, charCreationMenu.Open);
             };
 
             characterCreation.CharacterCreationSuccessful += sender =>

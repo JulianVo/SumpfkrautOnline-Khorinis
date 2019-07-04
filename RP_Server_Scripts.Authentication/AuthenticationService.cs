@@ -11,6 +11,7 @@ using RP_Server_Scripts.Logging;
 using RP_Server_Scripts.Network;
 using RP_Server_Scripts.Threading;
 using RP_Shared_Script;
+using RP_Shared_Script.Login;
 
 namespace RP_Server_Scripts.Authentication
 {

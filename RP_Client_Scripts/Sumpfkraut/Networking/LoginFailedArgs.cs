@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using RP_Shared_Script;
+using RP_Shared_Script.Login;
 
 namespace GUC.Scripts.Sumpfkraut.Networking
 {

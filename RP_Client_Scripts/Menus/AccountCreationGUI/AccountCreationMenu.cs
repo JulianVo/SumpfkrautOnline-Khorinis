@@ -4,7 +4,7 @@ using GUC.Scripts.Sumpfkraut.GUI.MainMenu;
 using GUC.Types;
 using RP_Shared_Script;
 
-namespace GUC.Scripts.Menus.AccountCreationMenu
+namespace GUC.Scripts.Menus.AccountCreationGUI
 {
     internal sealed class AccountCreationMenu : MenuWithViewBlocker
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using RP_Shared_Script;
+using RP_Shared_Script.Login;
 
 namespace RP_Server_Scripts.Authentication.Login
 {
