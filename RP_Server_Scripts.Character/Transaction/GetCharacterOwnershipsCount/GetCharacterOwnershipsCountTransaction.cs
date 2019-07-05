@@ -20,7 +20,7 @@ namespace RP_Server_Scripts.Character.Transaction
         }
 
 
-        public Task<int> GetCharacterOwnershipsCountAsync(Account account)
+        public Task<int> GetCharacterOwnershipsCountFromDbAsync(Account account)
         {
             if (account == null)
             {

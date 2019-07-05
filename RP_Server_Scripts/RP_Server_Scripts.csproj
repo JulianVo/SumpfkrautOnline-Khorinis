@@ -79,7 +79,6 @@
     <Compile Include="Network\IScriptMessageHandler.cs" />
     <Compile Include="Network\IScriptMessageHandlerSelector.cs" />
     <Compile Include="Network\ScriptMessageHandlerSelector.cs" />
-    <Compile Include="Network\ScriptMessages\LeaveGameMessageHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

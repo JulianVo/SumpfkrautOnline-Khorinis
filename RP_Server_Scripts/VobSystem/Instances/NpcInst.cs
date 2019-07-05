@@ -27,11 +27,11 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         public override VobType VobType => VobType.NPC;
 
-        public new NPC BaseInst => (NPC) base.BaseInst;
+        public new NPC BaseInst => (NPC)base.BaseInst;
         public ItemInventory BaseInventory => BaseInst.Inventory;
-        public ScriptInventory Inventory => (ScriptInventory) BaseInventory.ScriptObject;
+        public ScriptInventory Inventory => (ScriptInventory)BaseInventory.ScriptObject;
 
-        public new NpcDef Definition => (NpcDef) base.Definition;
+        public new NpcDef Definition => (NpcDef)base.Definition;
 
         public NPCMovement Movement => BaseInst.Movement;
         public VobEnvironment Environment => BaseInst.Environment;
@@ -66,8 +66,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
         public HumHeadTexs CustomHeadTex;
         public HumVoices CustomVoice;
         public float CustomFatness;
-        public Vec3f CustomScale = new Vec3f(1, 1, 1);
-        public string CustomName;
+        public Vec3f CustomScale { get; set; } = new Vec3f(1, 1, 1);
+        public string CustomName { get; set; }
 
 
         public void OnWriteTakeControl(PacketWriter stream)
@@ -86,7 +86,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         public ItemInst GetEquipmentBySlot(NPCSlots slotNum)
         {
-            return BaseInst.TryGetEquippedItem((int) slotNum, out Item item) ? (ItemInst) item.ScriptObject : null;
+            return BaseInst.TryGetEquippedItem((int)slotNum, out Item item) ? (ItemInst)item.ScriptObject : null;
         }
 
         public ItemInst GetArmor()
@@ -128,7 +128,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         public void EquipItem(int slot, Item item)
         {
-            EquipItem((NPCSlots) slot, (ItemInst) item.ScriptObject);
+            EquipItem((NPCSlots)slot, (ItemInst)item.ScriptObject);
         }
 
 
@@ -138,13 +138,13 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         public void EquipItem(NPCSlots slot, ItemInst item)
         {
-            if (item.BaseInst.Slot == (int) slot)
+            if (item.BaseInst.Slot == (int)slot)
             {
                 return;
             }
 
 
-            BaseInst.EquipItem((int) slot, item.BaseInst);
+            BaseInst.EquipItem((int)slot, item.BaseInst);
 
 
             OnEquip?.Invoke(item);
@@ -152,7 +152,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         public void UnequipItem(Item item)
         {
-            UnequipItem((ItemInst) item.ScriptObject);
+            UnequipItem((ItemInst)item.ScriptObject);
         }
 
         public event OnEquipHandler OnUnequip;
@@ -228,16 +228,16 @@ namespace RP_Server_Scripts.VobSystem.Instances
             UseCustoms = stream.ReadBit();
             if (UseCustoms)
             {
-                CustomBodyTex = (HumBodyTexs) stream.ReadByte();
-                CustomHeadMesh = (HumHeadMeshs) stream.ReadByte();
-                CustomHeadTex = (HumHeadTexs) stream.ReadByte();
-                CustomVoice = (HumVoices) stream.ReadByte();
+                CustomBodyTex = (HumBodyTexs)stream.ReadByte();
+                CustomHeadMesh = (HumHeadMeshs)stream.ReadByte();
+                CustomHeadTex = (HumHeadTexs)stream.ReadByte();
+                CustomVoice = (HumVoices)stream.ReadByte();
                 CustomFatness = stream.ReadFloat();
                 CustomScale = stream.ReadVec3f();
                 CustomName = stream.ReadString();
             }
 
-            _Uncon = (Unconsciousness) stream.ReadByte();
+            _Uncon = (Unconsciousness)stream.ReadByte();
             TeamId = stream.ReadSByte();
         }
 
@@ -250,10 +250,10 @@ namespace RP_Server_Scripts.VobSystem.Instances
             if (UseCustoms)
             {
                 stream.Write(true);
-                stream.Write((byte) CustomBodyTex);
-                stream.Write((byte) CustomHeadMesh);
-                stream.Write((byte) CustomHeadTex);
-                stream.Write((byte) CustomVoice);
+                stream.Write((byte)CustomBodyTex);
+                stream.Write((byte)CustomHeadMesh);
+                stream.Write((byte)CustomHeadTex);
+                stream.Write((byte)CustomVoice);
                 stream.Write(CustomFatness);
                 stream.Write(CustomScale);
                 stream.Write(CustomName ?? "");
@@ -263,8 +263,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
                 stream.Write(false);
             }
 
-            stream.Write((byte) _Uncon);
-            stream.Write((sbyte) TeamId);
+            stream.Write((byte)_Uncon);
+            stream.Write((sbyte)TeamId);
         }
 
 
@@ -316,7 +316,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
         static NpcInst()
         {
-            NPC.OnNPCMove += (npc, p, d, m) => SOnNpcInstMove((NpcInst) npc.ScriptObject, p, d, m);
+            NPC.OnNPCMove += (npc, p, d, m) => SOnNpcInstMove((NpcInst)npc.ScriptObject, p, d, m);
             SOnNpcInstMove += (npc, p, d, m) => npc.ChangePosDir(p, d, m);
         }
 
@@ -409,7 +409,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
             var aa = ModelInst.GetActiveAniFromLayer(1);
             if (aa != null)
             {
-                var job = (ScriptAniJob) aa.AniJob.ScriptObject;
+                var job = (ScriptAniJob)aa.AniJob.ScriptObject;
                 if (job == dropJob || job == dropJob.NextAni)
                 {
                     return;
@@ -425,17 +425,23 @@ namespace RP_Server_Scripts.VobSystem.Instances
             ModelInst.StartAniJob(dropJob);
         }
 
-        public NpcInst(NpcDef def):base(def)
+        public NpcInst(NpcDef def) : base(def)
         {
         }
 
 
 
-        public NPCCatalog AniCatalog => (NPCCatalog) ModelDef?.Catalog;
+        public NPCCatalog AniCatalog => (NPCCatalog)ModelDef?.Catalog;
 
         public bool IsPlayer => BaseInst.IsPlayer;
 
-        public Client.Client Client => (Client.Client) BaseInst.Client?.ScriptObject;
+        public Client.Client Client => (Client.Client)BaseInst.Client?.ScriptObject;
+
+        public bool TryGetControllingClient(out Client.Client client)
+        {
+            client = Client;
+            return client != null;
+        }
 
         /// <summary>
         ///     Starts an uncontrolled jump animation, throws the npc with velocity.
@@ -498,7 +504,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
 
 
             var stream = BaseInst.GetScriptVobStream();
-            stream.Write((byte) ScriptVobMessageIDs.Climb);
+            stream.Write((byte)ScriptVobMessageIDs.Climb);
             ledge.WriteStream(stream);
             BaseInst.SendScriptVobStream(stream);
 
@@ -1036,7 +1042,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
         public long LastHitMove { get; private set; }
 
 
-      
+
 
         public static event OnHitHandler sOnHit;
         public event OnHitHandler OnHit;
@@ -1044,8 +1050,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
         public void Hit(NpcInst attacker, int damage, bool fromFront = true)
         {
             var strm = BaseInst.GetScriptVobStream();
-            strm.Write((byte) ScriptVobMessageIDs.HitMessage);
-            strm.Write((ushort) attacker.ID);
+            strm.Write((byte)ScriptVobMessageIDs.HitMessage);
+            strm.Write((ushort)attacker.ID);
             BaseInst.SendScriptVobStream(strm);
 
             int protection = Protection;
@@ -1129,7 +1135,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
                 BaseInst.World.ForEachNPCRough(attPos, GUCScripts.BiggestNPCRadius + weaponRange,
                     npc => // fixme: enemy model radius
                     {
-                        NpcInst target = (NpcInst) npc.ScriptObject;
+                        NpcInst target = (NpcInst)npc.ScriptObject;
                         if (target == this || target.IsDead || target.IsUnconscious)
                         {
                             return;
@@ -1183,8 +1189,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
                         if (target.CurrentFightMove == FightMoves.Parry && tdiff > Angles.PI / 2) // parry 180 degrees
                         {
                             var strm = BaseInst.GetScriptVobStream();
-                            strm.Write((byte) ScriptVobMessageIDs.ParryMessage);
-                            strm.Write((ushort) npc.ID);
+                            strm.Write((byte)ScriptVobMessageIDs.ParryMessage);
+                            strm.Write((ushort)npc.ID);
                             BaseInst.SendScriptVobStream(strm);
                         }
                         else // HIT
@@ -1319,8 +1325,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
             _Uncon = toFront ? Unconsciousness.Front : Unconsciousness.Back;
 
             var strm = BaseInst.GetScriptVobStream();
-            strm.Write((byte) ScriptVobMessageIDs.Uncon);
-            strm.Write((byte) _Uncon);
+            strm.Write((byte)ScriptVobMessageIDs.Uncon);
+            strm.Write((byte)_Uncon);
             BaseInst.SendScriptVobStream(strm);
 
             if (duration >= 0)
@@ -1365,8 +1371,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
         {
             _Uncon = Unconsciousness.None;
             var strm = BaseInst.GetScriptVobStream();
-            strm.Write((byte) ScriptVobMessageIDs.Uncon);
-            strm.Write((byte) _Uncon);
+            strm.Write((byte)ScriptVobMessageIDs.Uncon);
+            strm.Write((byte)_Uncon);
             BaseInst.SendScriptVobStream(strm);
 
             int hp = HP + 25;
@@ -1425,25 +1431,25 @@ namespace RP_Server_Scripts.VobSystem.Instances
         {
             if (male)
             {
-                CustomBodyTex = (HumBodyTexs) Randomizer.GetInt(0, 4);
-                CustomHeadMesh = (HumHeadMeshs) Randomizer.GetInt(6);
-                CustomVoice = (HumVoices) Randomizer.GetInt(15);
+                CustomBodyTex = (HumBodyTexs)Randomizer.GetInt(0, 4);
+                CustomHeadMesh = (HumHeadMeshs)Randomizer.GetInt(6);
+                CustomVoice = (HumVoices)Randomizer.GetInt(15);
                 switch (CustomBodyTex)
                 {
                     case HumBodyTexs.M_Pale:
-                        CustomHeadTex = (HumHeadTexs) Randomizer.GetInt(41, 58);
+                        CustomHeadTex = (HumHeadTexs)Randomizer.GetInt(41, 58);
                         break;
                     case HumBodyTexs.M_Normal:
                     case HumBodyTexs.G1Hero:
                     case HumBodyTexs.G2Hero:
                     case HumBodyTexs.M_Tattooed:
-                        CustomHeadTex = (HumHeadTexs) Randomizer.GetInt(58, 120);
+                        CustomHeadTex = (HumHeadTexs)Randomizer.GetInt(58, 120);
                         break;
                     case HumBodyTexs.M_Latino:
-                        CustomHeadTex = (HumHeadTexs) Randomizer.GetInt(120, 129);
+                        CustomHeadTex = (HumHeadTexs)Randomizer.GetInt(120, 129);
                         break;
                     case HumBodyTexs.M_Black:
-                        CustomHeadTex = (HumHeadTexs) Randomizer.GetInt(129, 137);
+                        CustomHeadTex = (HumHeadTexs)Randomizer.GetInt(129, 137);
                         break;
                 }
             }
@@ -1458,8 +1464,8 @@ namespace RP_Server_Scripts.VobSystem.Instances
         public void DoVoice(VoiceCmd cmd, bool shout = false)
         {
             var strm = BaseInst.GetScriptVobStream();
-            strm.Write((byte) (shout ? ScriptVobMessageIDs.VoiceShout : ScriptVobMessageIDs.Voice));
-            strm.Write((byte) cmd);
+            strm.Write((byte)(shout ? ScriptVobMessageIDs.VoiceShout : ScriptVobMessageIDs.Voice));
+            strm.Write((byte)cmd);
             BaseInst.SendScriptVobStream(strm);
         }
     }

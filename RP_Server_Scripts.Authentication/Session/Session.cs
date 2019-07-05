@@ -1,9 +1,12 @@
 ﻿using System;
+using RP_Shared_Script;
 
 namespace RP_Server_Scripts.Authentication
 {
     public sealed class Session
     {
+        public event GenericEventHandler<Session, LogoutEventArgs> LoggedOut;
+
         public Session(Client.Client client, Account account)
         {
             Client = client ?? throw new ArgumentNullException(nameof(client));
@@ -16,10 +19,11 @@ namespace RP_Server_Scripts.Authentication
 
         public bool IsValid { get; private set; }
 
-        public  int ClientId { get; private set; }
+        public int ClientId { get; private set; }
 
         internal void Invalidate()
         {
+            LoggedOut?.Invoke(this, new LogoutEventArgs(Client, Account));
             IsValid = false;
             ClientId = -1;
         }

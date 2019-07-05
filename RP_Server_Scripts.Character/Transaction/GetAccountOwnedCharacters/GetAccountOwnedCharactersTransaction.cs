@@ -22,7 +22,7 @@ namespace RP_Server_Scripts.Character.Transaction
             _Log = loggerFactory?.GetLogger(GetType()) ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
 
-        public Task<IList<Character>> GetAccountOwnedCharactersAsync(Account owner)
+        public Task<IList<Character>> GetAccountOwnedCharactersFromDbAsync(Account owner)
         {
             var task = new Task<IList<Character>>(() =>
             {
@@ -35,6 +35,7 @@ namespace RP_Server_Scripts.Character.Transaction
                         //Call to list or we will get problems with trying to create multiple result sets on the same connection without using the MARS-Mode(Multiple Active Result Sets).
                         foreach (var characterEntity in db.CharacterOwnerships.Where(os => os.Owner.AccountId == owner.AccountId).Select(os => os.Character).ToList())
                         {
+
                             var humanVisuals = db.CustomVisuals.FirstOrDefault(vis =>
                                 vis.OwnerCharacter.CharacterId == characterEntity.CharacterId);
 

@@ -2,7 +2,7 @@
 {
     public sealed class HumanCharacter : Character
     {
-        internal HumanCharacter(int characterId) : base(characterId)
+        internal HumanCharacter(int characterId, CharacterService characterService) : base(characterId, characterService)
         {
         }
 

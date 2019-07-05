@@ -5,5 +5,6 @@
         CharacterInUse,
         Timeout,
         MessageHandlingError,
+        InvalidCharacterId
     }
 }

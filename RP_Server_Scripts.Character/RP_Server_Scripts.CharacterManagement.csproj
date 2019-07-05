@@ -53,7 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountLogoutHandling.cs" />
+    <Compile Include="CharacterMapping.cs" />
     <Compile Include="MessageHandler\InformationWriter\CharacterVisualsWriter.cs" />
+    <Compile Include="MessageHandler\JoinGameMessageHandler.cs" />
+    <Compile Include="MessageHandler\LeaveGameMessageHandler.cs" />
     <Compile Include="MessageHandler\RequestCharacterListMessageHandler.cs" />
     <Compile Include="Transaction\GetAccountActiveCharacter\ActiveCharacterFound.cs" />
     <Compile Include="Transaction\GetAccountActiveCharacter\ActiveCharacterResult.cs" />
@@ -114,10 +118,6 @@
     <ProjectReference Include="..\RP_Shared_Script\RP_Shared_Script.csproj">
       <Project>{a072c908-bb56-404a-b660-679e62e47500}</Project>
       <Name>RP_Shared_Script</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ScriptsServer\ScriptsServer.csproj">
-      <Project>{477c9b57-ad36-4cac-998f-800c5a693c35}</Project>
-      <Name>ScriptsServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

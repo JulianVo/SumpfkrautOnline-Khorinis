@@ -142,7 +142,6 @@ namespace GUC.Scripts
                 _DiContainer = _DiBuilder.Build();
             }
             _DiContainer.Resolve<LoginMenu>().Open();
-            OnIngame += () => _DiContainer.Resolve<ScriptClient>().SendJoinGameMessage();
 
             OnOutgame?.Invoke();
             Logger.Log("Outgame started.");

@@ -137,12 +137,6 @@ namespace GUC.Scripts.Sumpfkraut.Networking
         }
 
 
-        public void SendJoinGameMessage()
-        {
-            var stream = _WriterFactory.Create(ScriptMessages.JoinGame);
-            _MessageSender.SendScriptMessage(stream, NetPriority.Low, NetReliability.Reliable);
-        }
-
 
         void ReadGameInfo(PacketReader stream)
         {

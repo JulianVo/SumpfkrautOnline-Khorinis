@@ -41,7 +41,7 @@ namespace RP_Server_Scripts.Chat
 
             if (mode == ChatMode.All)
             {
-                SendMessageToAll($"{sender.Character.CustomName ?? throw new NullReferenceException("Character custom name must not be null")}: {message}");
+                SendMessageToAll($"{sender.ControlledNpc.CustomName ?? throw new NullReferenceException("Character custom name must not be null")}: {message}");
             }
         }
     }

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GUC.WorldObjects;
+
 
 namespace RP_Server_Scripts.WorldSystem
 {
@@ -16,6 +19,16 @@ namespace RP_Server_Scripts.WorldSystem
                     yield return (WorldInst)world.ScriptObject;
                 }
             }
+        }
+
+        public WorldInst GetWorldOrFallback(string worldFile)
+        {
+            if (string.IsNullOrWhiteSpace(worldFile))
+            {
+                throw new ArgumentException(@"Value cannot be null or whitespace.", nameof(worldFile));
+            }
+
+            return Worlds.FirstOrDefault(w => w.Path.Equals(worldFile)) ?? Worlds.First();
         }
     }
 }

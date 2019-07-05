@@ -63,7 +63,7 @@ namespace RP_Server_Scripts.Character.MessageHandler
 
                     //Create the new character.
                     CharacterCreationResult result =
-                        await _CharacterService.CreateHumanPlayerCharacterAsync(session.Account, creationInfo);
+                        await _CharacterService.CreateHumanPlayerCharacterAsync(creationInfo);
 
 
 

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using GUC.Scripts.ReusedClasses;
-using RP_Server_Scripts.Authentication;
 using RP_Server_Scripts.Database;
 using RP_Server_Scripts.Database.Character;
 using RP_Server_Scripts.Logging;
@@ -42,13 +40,8 @@ namespace RP_Server_Scripts.Character.Transaction
             _Log = loggerFactory.GetLogger(GetType()) ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
 
-        public Task<CharacterCreationResult> CreateHumanPlayerCharacterAsync(Account creator, CharCreationInfo creationInfo)
+        public Task<CharacterCreationResult> CreateHumanPlayerCharacterAsync(CharCreationInfo creationInfo)
         {
-            if (creator == null)
-            {
-                throw new ArgumentNullException(nameof(creator));
-            }
-
             if (creationInfo == null)
             {
                 throw new ArgumentNullException(nameof(creationInfo));
@@ -59,7 +52,7 @@ namespace RP_Server_Scripts.Character.Transaction
                 //Validate the creation info because it comes directly from the client(we do not trust the client).
                 if (!creationInfo.Validate(out string invalidProperty, out object value))
                 {
-                    _Log.Warn($"Account '{creator.UserName}' tried to create a character with a invalid {nameof(CharCreationInfo)}, invalid attribute is '{invalidProperty}' with value '{value}'");
+                    _Log.Warn($"Character creation failed due to invalid {nameof(CharCreationInfo)}, invalid attribute is '{invalidProperty}' with value '{value}'");
                     return new CharacterCreationFailed(CharacterCreationFailure.InvalidCreationInfo);
                 }
 
@@ -87,7 +80,6 @@ namespace RP_Server_Scripts.Character.Transaction
                         //Add the character
                         var characterEntity = new CharacterEntity
                         {
-                            Creator = db.Accounts.First(c => c.AccountId == creator.AccountId),
                             CharacterName = creationInfo.Name,
                             PositionX = spawn.Point.X,
                             PositionY = spawn.Point.Y,
@@ -121,7 +113,7 @@ namespace RP_Server_Scripts.Character.Transaction
                         //Invoke the character creation event(later so we can inform the client first)
                         _Dispatcher.EnqueueAction(() =>
                         {
-                            _CharacterService.OnCharacterCreated(new CharacterCreatedArgs(creator, character));
+                            _CharacterService.OnCharacterCreated(new CharacterCreatedArgs(character));
                         });
 
                         //Return information about successful character creation.

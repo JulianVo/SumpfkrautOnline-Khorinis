@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using RP_Server_Scripts.Authentication;
 using RP_Server_Scripts.Autofac;
 using RP_Server_Scripts.Character.MessageHandler;
 using RP_Server_Scripts.Character.MessageHandler.InformationWriter;
@@ -19,14 +20,7 @@ namespace RP_Server_Scripts.Character
 
             var allConstructorFinder = new AllConstructorFinder();
 
-            //Database initialization
-
-            builder.RegisterType<CharacterItemsInitialization>().AsSelf().SingleInstance().AutoActivate().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<CharacterVisualsWriter>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
-            
-
-
-
             builder.RegisterType<DefaultSpawnPointProvider>().As<ISpawnPointProvider>().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<CharacterTemplateSelector>().As<ICharacterTemplateSelector>().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<CharacterBuilder>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
@@ -58,16 +52,24 @@ namespace RP_Server_Scripts.Character
                     args.Context.Resolve<GetAccountActiveCharacterTransaction>();
                 args.Instance.GetCharacterOwnershipsCountTransaction =
                     args.Context.Resolve<GetCharacterOwnershipsCountTransaction>();
+                args.Instance.AuthenticationService =
+                    args.Context.Resolve<AuthenticationService>();
 
-                
+
             }).AsSelf().SingleInstance();
 
 
             //Message Handling
             builder.RegisterType<CharacterCreationMessageHandler>().As<IScriptMessageHandler>().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<RequestCharacterListMessageHandler>().As<IScriptMessageHandler>().SingleInstance().FindConstructorsWith(allConstructorFinder);
-            
+            builder.RegisterType<JoinGameMessageHandler>().As<IScriptMessageHandler>().SingleInstance().FindConstructorsWith(allConstructorFinder);
+            builder.RegisterType<LeaveGameMessageHandler>().As<IScriptMessageHandler>().SingleInstance().FindConstructorsWith(allConstructorFinder);
 
+            //Database initialization
+            builder.RegisterType<CharacterItemsInitialization>().AsSelf().SingleInstance().AutoActivate().FindConstructorsWith(allConstructorFinder);
+
+            //Other initializations
+            builder.RegisterType<AccountLogoutHandling>().AsSelf().SingleInstance().AutoActivate();
         }
     }
 }

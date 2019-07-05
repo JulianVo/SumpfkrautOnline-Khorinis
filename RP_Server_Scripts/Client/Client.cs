@@ -34,7 +34,13 @@ namespace RP_Server_Scripts.Client
 
         public GameClient BaseClient { get; }
 
-        public NpcInst Character => (NpcInst)BaseClient.Character?.ScriptObject;
+        public NpcInst ControlledNpc => (NpcInst)BaseClient.Character?.ScriptObject;
+
+        public bool TryGetControlledNpc(out NpcInst npc)
+        {
+            npc = ControlledNpc;
+            return npc != null;
+        }
 
         public event EventHandler<ClientDisconnectedEventArgs> OnDisconnected;
         public event EventHandler<ClientConnectedEventArgs> OnConnected;
@@ -60,12 +66,12 @@ namespace RP_Server_Scripts.Client
         }
 
         /// <summary>
-        /// Removes the control of the current <see cref="Client"/> from its <see cref="Character"/>(if it has one).
+        /// Removes the control of the current <see cref="Client"/> from its <see cref="ControlledNpc"/>(if it has one).
         /// <remarks>Does nothing if the current <see cref="Client"/> does not have a character.</remarks>
         /// </summary>
         public void RemoveControl()
         {
-            if (Character != null)
+            if (ControlledNpc != null)
             {
                 BaseClient.SetControl(null);
             }
@@ -126,7 +132,7 @@ namespace RP_Server_Scripts.Client
 
         void GameClient.IScriptClient.OnDisconnection(int id)
         {
-            this.Character?.Despawn();
+            this.ControlledNpc?.Despawn();
             var s = _StreamFactory.GetScriptMessageStream(ScriptMessages.PlayerQuit);
             s.Write((byte)id);
             OnDisconnected?.Invoke(this, new ClientDisconnectedEventArgs(this));
@@ -189,7 +195,7 @@ namespace RP_Server_Scripts.Client
         {
             RequestMessageIDs id = (RequestMessageIDs)stream.ReadByte();
 
-            if (id > RequestMessageIDs.MaxGuidedMessages && vob != Character.BaseInst)
+            if (id > RequestMessageIDs.MaxGuidedMessages && vob != ControlledNpc.BaseInst)
             {
                 return; // client sent a request for a bot which is only allowed for players
             }

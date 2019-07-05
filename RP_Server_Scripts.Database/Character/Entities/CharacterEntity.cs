@@ -12,8 +12,6 @@ namespace RP_Server_Scripts.Database.Character
         [Key]
         public int CharacterId { get; set; }
 
-        [Required]
-        public virtual  AccountEntity Creator { get; set; }
 
         [Required]
         public string TemplateName { get; set; }

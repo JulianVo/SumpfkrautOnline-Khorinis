@@ -28,7 +28,7 @@ namespace GUC.WorldObjects
                     current.ForEachVob(v => v.Despawn());
                     current.Delete();
                 }
-
+                
                 current = ScriptManager.Interface.CreateWorld();
 
                 current.ID = 0;
