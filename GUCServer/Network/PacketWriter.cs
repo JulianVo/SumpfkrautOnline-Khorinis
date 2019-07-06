@@ -9,7 +9,7 @@ namespace GUC.Network
     public class PacketWriter
     {
         const int StandardCapacity = 32000;
-        
+
         int pos;
         public int Position
         {
@@ -38,11 +38,11 @@ namespace GUC.Network
         int SBitsWritten;
         int SBitByte;*/
 
-        internal PacketWriter() : this(StandardCapacity)
+        public PacketWriter() : this(StandardCapacity)
         {
         }
 
-        internal PacketWriter(int capacity)
+        public PacketWriter(int capacity)
         {
             this.capacity = capacity;
             data = new byte[capacity];
@@ -50,7 +50,7 @@ namespace GUC.Network
             Reset();
         }
 
-        internal void Reset()
+        public void Reset()
         {
             Position = 0;
             currentBitByte = -1;

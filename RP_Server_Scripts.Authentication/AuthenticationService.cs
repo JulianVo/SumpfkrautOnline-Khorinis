@@ -23,7 +23,7 @@ namespace RP_Server_Scripts.Authentication
         private readonly IAuthenticationContextFactory _ContextFactory;
         private readonly IPasswordService _PasswordService;
         private readonly IMainThreadDispatcher _Dispatcher;
-        private readonly IPacketWriterFactory _PacketWriterFactory;
+        private readonly IPacketWriterPool _PacketWriterPool;
         private readonly object _Lock = new object();
         private readonly Dictionary<Client.Client, Session> _SessionByClient = new Dictionary<Client.Client, Session>();
         private readonly ILogger _Log;
@@ -50,7 +50,7 @@ namespace RP_Server_Scripts.Authentication
 
 
 
-        internal AuthenticationService(ClientList clientList, IAuthenticationContextFactory contextFactory, IPasswordService passwordService, IMainThreadDispatcher dispatcher, ILoggerFactory loggerFactory, ServerOptionsProvider optionsProvider, IPacketWriterFactory packetWriterFactory)
+        internal AuthenticationService(ClientList clientList, IAuthenticationContextFactory contextFactory, IPasswordService passwordService, IMainThreadDispatcher dispatcher, ILoggerFactory loggerFactory, ServerOptionsProvider optionsProvider, IPacketWriterPool packetWriterPool)
         {
             if (clientList == null)
             {
@@ -70,7 +70,7 @@ namespace RP_Server_Scripts.Authentication
             _ContextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
             _PasswordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
             _Dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
-            _PacketWriterFactory = packetWriterFactory ?? throw new ArgumentNullException(nameof(packetWriterFactory));
+            _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
             _Log = loggerFactory.GetLogger(GetType());
 
             _ClientIdLoggedIn = new bool[optionsProvider.Slot];
@@ -121,7 +121,7 @@ namespace RP_Server_Scripts.Authentication
                      if (_SessionByClient.Values.Any(session =>
                          session.Account.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)))
                      {
-                         throw new InvalidOperationException(@"Another client has already created a session with the given username.");
+                         return new LoginFailedResult(LoginFailedReason.AccountAlreadyLoggedIn, string.Empty);
                      }
 
 
@@ -420,8 +420,10 @@ namespace RP_Server_Scripts.Authentication
                     character?.Despawn();
                 }
 
-                PacketWriter message = _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.LogoutAcknowledged);
-                client.SendScriptMessage(message, NetPriority.High, NetReliability.ReliableOrdered);
+                using (var message = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.LogoutAcknowledged))
+                {
+                    client.SendScriptMessage(message, NetPriority.High, NetReliability.ReliableOrdered);
+                }
             }
 
             //Invoke the logout event.

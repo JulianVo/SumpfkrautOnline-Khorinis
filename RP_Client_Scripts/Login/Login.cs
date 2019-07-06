@@ -56,6 +56,9 @@ namespace GUC.Scripts.Login
                 case LoginFailedReason.UserNameAlreadyInUse:
                     message = $"[Accountname bereits vergeben] {args.ReasonText}";
                     break;
+                case LoginFailedReason.AccountAlreadyLoggedIn:
+                    message = $"[Account bereits in Benutzung] {args.ReasonText}";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

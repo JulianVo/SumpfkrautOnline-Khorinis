@@ -69,7 +69,7 @@ namespace RP_Server_Scripts
             builder.RegisterType<ScriptMessageHandlerSelector>().As<IScriptMessageHandlerSelector>().SingleInstance();
 
             builder.RegisterType<ClientFactory>().As<IClientFactory>().SingleInstance();
-            builder.RegisterType<PacketWriterFactory>().As<IPacketWriterFactory>().SingleInstance();
+            builder.RegisterType<PacketWriterPool>().As<IPacketWriterPool>().SingleInstance();
             builder.RegisterType<WorldList>().AsSelf().SingleInstance();
             builder.RegisterType<BaseDefFactory>().As<IBaseDefFactory>().SingleInstance();
             builder.RegisterType<VobDefRegistration>().As<IVobDefRegistration>().SingleInstance();

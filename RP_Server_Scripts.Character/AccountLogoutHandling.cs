@@ -33,7 +33,11 @@ namespace RP_Server_Scripts.Character
                 {
                     if (args.Client.TryGetControlledNpc(out NpcInst npc))
                     {
-                        args.Client.RemoveControl();
+                        //If the client is still connected, remove the control. If it is not connected, it does not matter.
+                        if (args.Client.IsConnected)
+                        {
+                            args.Client.RemoveControl();
+                        }
 
                         if (characterService.TryGetMapping(npc, out CharacterMapping mapping))
                         {

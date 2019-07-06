@@ -16,15 +16,15 @@ namespace RP_Server_Scripts.Character.MessageHandler
     {
         private readonly CharacterService _CharacterService;
         private readonly AuthenticationService _AuthenticationService;
-        private readonly IPacketWriterFactory _PacketWriterFactory;
+        private readonly IPacketWriterPool _PacketWriterPool;
         private readonly RpConfig _RpConfig;
         private readonly ILogger _Log;
 
-        public CharacterCreationMessageHandler(CharacterService characterService, AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterFactory packetWriterFactory, RpConfig rpConfig)
+        public CharacterCreationMessageHandler(CharacterService characterService, AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterPool packetWriterPool, RpConfig rpConfig)
         {
             _CharacterService = characterService ?? throw new ArgumentNullException(nameof(characterService));
             _AuthenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
-            _PacketWriterFactory = packetWriterFactory ?? throw new ArgumentNullException(nameof(packetWriterFactory));
+            _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
             _RpConfig = rpConfig ?? throw new ArgumentNullException(nameof(rpConfig));
             _Log = loggerFactory?.GetLogger(GetType()) ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
@@ -52,12 +52,16 @@ namespace RP_Server_Scripts.Character.MessageHandler
                     //Lets first check if the account can have an additional account(limit is taken from the rp config).
                     int charOwnershipsCount = await _CharacterService.GetCharacterOwnershipsCount(session.Account);
 
-                    PacketWriter packet =
-                        _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.CharacterCreationResult);
+
                     if (charOwnershipsCount >= _RpConfig.MaxCharacterPerAccount)
                     {
-                        packet.Write(false);
-                        packet.Write((byte)CharacterCreationFailure.CharacterLimitReached);
+                        using (var packet = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.CharacterCreationResult))
+                        {
+                            packet.Write(false);
+                            packet.Write((byte)CharacterCreationFailure.CharacterLimitReached);
+                            sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+                        }
+                        return;
                     }
 
 
@@ -69,9 +73,13 @@ namespace RP_Server_Scripts.Character.MessageHandler
 
                     if (result is CharacterCreationFailed failed)
                     {
-                        //Failure
-                        packet.Write(false);
-                        packet.Write((byte)failed.Reason);
+                        using (var packet = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.CharacterCreationResult))
+                        {
+                            //Failure
+                            packet.Write(false);
+                            packet.Write((byte)failed.Reason);
+                            sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+                        }
                     }
                     else if (result is CharacterCreationSuccess success)
                     {
@@ -82,12 +90,16 @@ namespace RP_Server_Scripts.Character.MessageHandler
                              _CharacterService.SetAccountActiveCharacterAsync(session.Account, success.Character)
                         });
 
-                        //Success
-                        packet.Write(true);
+
+                        using (var packet = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.CharacterCreationResult))
+                        {
+                            //Success
+                            packet.Write(true);
+                            sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+                        }
                     }
 
-                    // Send the result to the client.
-                    sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+
                 }
                 else
                 {

@@ -12,10 +12,10 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
     internal sealed class LoginMessageHandler : IScriptMessageHandler
     {
         private readonly AuthenticationService _AuthenticationService;
-        private readonly IPacketWriterFactory _PacketWriterFactory;
+        private readonly IPacketWriterPool _PacketWriterPool;
         private readonly ILogger _Logger;
 
-        internal LoginMessageHandler(AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterFactory packetWriterFactory)
+        internal LoginMessageHandler(AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterPool packetWriterPool)
         {
             if (loggerFactory == null)
             {
@@ -23,7 +23,7 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
             }
 
             _AuthenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
-            _PacketWriterFactory = packetWriterFactory ?? throw new ArgumentNullException(nameof(packetWriterFactory));
+            _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
             _Logger = loggerFactory.GetLogger(GetType());
         }
 
@@ -46,23 +46,23 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
                 LoginResult result = await _AuthenticationService.LoginClientAsync(sender, userName, password);
                 if (result.Successful)
                 {
-                    PacketWriter writer =
-                        _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.LoginAcknowledge);
-
-                    sender.SendScriptMessage(writer, NetPriority.High, NetReliability.ReliableOrdered);
+                    using (var writer = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.LoginAcknowledge))
+                    {
+                        sender.SendScriptMessage(writer, NetPriority.High, NetReliability.ReliableOrdered);
+                    }
                 }
                 else
                 {
                     if (result is LoginFailedResult failedResult)
                     {
-                        PacketWriter writer =
-                            _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.LoginDenied);
-                        writer.Write((byte)failedResult.Reason);
-                        writer.Write(failedResult.ReasonText);
-                        sender.SendScriptMessage(writer, NetPriority.High, NetReliability.ReliableOrdered);
+                        using (var writer = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.LoginDenied))
+                        {
+                            writer.Write((byte)failedResult.Reason);
+                            writer.Write(failedResult.ReasonText);
+                            sender.SendScriptMessage(writer, NetPriority.High, NetReliability.ReliableOrdered);
+                        }
                     }
                 }
-
             }
             catch (Exception e)
             {

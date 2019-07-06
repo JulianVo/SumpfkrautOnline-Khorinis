@@ -77,6 +77,7 @@ namespace GUC.Network
             if (this.character == npc)
                 return;
 
+
             pSetControl(npc);
         }
 

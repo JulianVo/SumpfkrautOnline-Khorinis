@@ -197,7 +197,6 @@ namespace GUC.Network
 
         internal static PacketWriter SetupStream(ServerMessages ID)
         {
-            Logger.LogWarning($"Setting up packet for '{ID}'");
             pktWriter.Reset();
             pktWriter.Write((byte)ID);
             return pktWriter;

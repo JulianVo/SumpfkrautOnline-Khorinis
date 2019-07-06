@@ -16,13 +16,13 @@ namespace RP_Server_Scripts.Client
     public class Client : GameClient.IScriptClient
     {
         private readonly IScriptMessageHandlerSelector _HandlerSelector;
-        private readonly IPacketWriterFactory _StreamFactory;
+        private readonly IPacketWriterPool _StreamPool;
         private readonly ClientList _ClientList;
 
-        internal Client(IScriptMessageHandlerSelector handlerSelector, IPacketWriterFactory streamFactory, ClientList clientList)
+        internal Client(IScriptMessageHandlerSelector handlerSelector, IPacketWriterPool streamPool, ClientList clientList)
         {
             _HandlerSelector = handlerSelector ?? throw new ArgumentNullException(nameof(handlerSelector));
-            _StreamFactory = streamFactory ?? throw new ArgumentNullException(nameof(streamFactory));
+            _StreamPool = streamPool ?? throw new ArgumentNullException(nameof(streamPool));
             _ClientList = clientList ?? throw new ArgumentNullException(nameof(clientList));
             BaseClient = new GameClient(this);
         }
@@ -103,10 +103,10 @@ namespace RP_Server_Scripts.Client
                 throw new ArgumentException(@"Value cannot be null or whitespace.", nameof(message));
             }
 
-            var stream = _StreamFactory.GetScriptMessageStream();
-            stream.Write((byte)ScriptMessages.ChatMessage);
-            stream.Write(message);
-            BaseClient.SendScriptMessage(stream, NetPriority.Low, NetReliability.Reliable);
+            using (var stream = _StreamPool.GetScriptMessageStream(ScriptMessages.ChatMessage))
+            {
+                BaseClient.SendScriptMessage(stream, NetPriority.Low, NetReliability.Reliable);
+            }
         }
 
         public void SendServerNotification(string message)
@@ -114,7 +114,7 @@ namespace RP_Server_Scripts.Client
             SendChatMessage("<Server>:" + message);
         }
 
-        public void SendScriptMessage(PacketWriter writer,NetPriority priority,NetReliability reliability)
+        public void SendScriptMessage(PacketWriter writer, NetPriority priority, NetReliability reliability)
         {
             if (writer == null)
             {
@@ -133,10 +133,12 @@ namespace RP_Server_Scripts.Client
         void GameClient.IScriptClient.OnDisconnection(int id)
         {
             this.ControlledNpc?.Despawn();
-            var s = _StreamFactory.GetScriptMessageStream(ScriptMessages.PlayerQuit);
-            s.Write((byte)id);
-            OnDisconnected?.Invoke(this, new ClientDisconnectedEventArgs(this));
-            _ClientList.ForEach(c => c.BaseClient.SendScriptMessage(s, NetPriority.Low, NetReliability.ReliableOrdered));
+            using (var s = _StreamPool.GetScriptMessageStream(ScriptMessages.PlayerQuit))
+            {
+                s.Write((byte)id);
+                OnDisconnected?.Invoke(this, new ClientDisconnectedEventArgs(this));
+                _ClientList.ForEach(c => c.BaseClient.SendScriptMessage(s, NetPriority.Low, NetReliability.ReliableOrdered));
+            }
         }
 
         void GameClient.IScriptClient.SetControl(NPC npc)
@@ -178,7 +180,7 @@ namespace RP_Server_Scripts.Client
         void GameClient.IScriptClient.ReadScriptMessage(PacketReader stream)
         {
             ScriptMessages id = (ScriptMessages)stream.ReadByte();
-            Logger.Log(Logger.LOG_INFO,$"Received Script message '{id}' from '{SystemAddress}'");
+            Logger.Log(Logger.LOG_INFO, $"Received Script message '{id}' from '{SystemAddress}'");
 
             //Log.Logger.Log(id);
             if (_HandlerSelector.TryGetMessageHandler(id, out IScriptMessageHandler handler))

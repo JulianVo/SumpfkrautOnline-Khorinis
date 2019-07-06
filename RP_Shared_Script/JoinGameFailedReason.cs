@@ -2,6 +2,7 @@
 {
     public enum JoinGameFailedReason:byte
     {
+        None,
         CharacterInUse,
         Timeout,
         MessageHandlingError,

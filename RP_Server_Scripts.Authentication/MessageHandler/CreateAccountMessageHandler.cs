@@ -11,10 +11,10 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
     internal sealed class CreateAccountMessageHandler : IScriptMessageHandler
     {
         private readonly AuthenticationService _AuthenticationService;
-        private readonly IPacketWriterFactory _PacketWriterFactory;
+        private readonly IPacketWriterPool _PacketWriterPool;
         private readonly ILogger _Log;
 
-        public CreateAccountMessageHandler(AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterFactory packetWriterFactory)
+        public CreateAccountMessageHandler(AuthenticationService authenticationService, ILoggerFactory loggerFactory, IPacketWriterPool packetWriterPool)
         {
             if (loggerFactory == null)
             {
@@ -22,7 +22,7 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
             }
 
             _AuthenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
-            _PacketWriterFactory = packetWriterFactory ?? throw new ArgumentNullException(nameof(packetWriterFactory));
+            _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
             _Log = loggerFactory.GetLogger(GetType());
         }
 
@@ -48,18 +48,21 @@ namespace RP_Server_Scripts.Authentication.MessageHandler
 
                 if (result is AccountCreationSuccessful successfulResult)
                 {
-                    PacketWriter writer =
-                        _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.AccountCreationResult);
-                    writer.Write(true);
-                    sender.SendScriptMessage(writer, NetPriority.Medium, NetReliability.ReliableOrdered);
+                    using (var writer = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.AccountCreationResult))
+                    {
+                        writer.Write(true);
+                        sender.SendScriptMessage(writer, NetPriority.Medium, NetReliability.ReliableOrdered);
+                    }
+
                 }
                 else if (result is AccountCreationFailed failedResult)
                 {
-                    PacketWriter writer =
-                        _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.AccountCreationResult);
-                    writer.Write(false);
-                    writer.Write(failedResult.ReasonText);
-                    sender.SendScriptMessage(writer, NetPriority.Medium, NetReliability.ReliableOrdered);
+                    using (var writer = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.AccountCreationResult))
+                    {
+                        writer.Write(false);
+                        writer.Write(failedResult.ReasonText);
+                        sender.SendScriptMessage(writer, NetPriority.Medium, NetReliability.ReliableOrdered);
+                    }
                 }
             }
             catch (Exception e)

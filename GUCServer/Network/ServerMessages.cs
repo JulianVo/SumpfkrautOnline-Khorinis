@@ -9,7 +9,7 @@ namespace GUC.Network
     /// <summary>
     /// Types of network messages(data) which can be exchanged between clients and server.
     /// </summary>
-    internal enum ServerMessages : byte
+    public enum ServerMessages : byte
     {
         RakNet_ConnectionRequestAccepted = DefaultMessageIDTypes.ID_CONNECTION_REQUEST_ACCEPTED,
         RakNet_ConnectionAttemptFailed = DefaultMessageIDTypes.ID_CONNECTION_ATTEMPT_FAILED,
@@ -24,7 +24,7 @@ namespace GUC.Network
 
         // general
         DynamicsMessage, // sends all dynamic vob & model instances to the client
-        
+
         // instances
         VobInstanceCreateMessage,
         VobInstanceDeleteMessage,
@@ -32,7 +32,7 @@ namespace GUC.Network
         // models
         ModelInstanceCreateMessage,
         ModelInstanceDeleteMessage,
-        
+
         // spectator
         SpectatorMessage, // lets the client know that he's a spectator
 
@@ -45,7 +45,7 @@ namespace GUC.Network
         // Messages for Scripts
         ScriptMessage, // generic script message (menus, global effects etc.)
         ScriptVobMessage, // script message concerning a single vob
-        
+
         // world & spawns
         WorldCellMessage, // when moving in the world, sends a list of vobs to despawn and a list of vobs to spawn
         WorldJoinMessage, // when joining the world, sens a list of vobs to spawn

@@ -1,5 +1,6 @@
 ﻿using Gothic.Types;
 using Gothic.View;
+using GUC.Log;
 using GUC.Scripts.Sumpfkraut.Menus;
 
 namespace GUC.Scripts.Sumpfkraut.WorldSystem

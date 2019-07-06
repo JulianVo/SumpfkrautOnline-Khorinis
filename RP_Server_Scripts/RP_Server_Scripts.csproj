@@ -79,6 +79,7 @@
     <Compile Include="Network\IScriptMessageHandler.cs" />
     <Compile Include="Network\IScriptMessageHandlerSelector.cs" />
     <Compile Include="Network\ScriptMessageHandlerSelector.cs" />
+    <Compile Include="Network\ScriptPacketWriter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,7 +100,7 @@
     <Compile Include="VobSystem\Definitions\NpcDefList.cs" />
     <Compile Include="VobSystem\Definitions\IVobDefList.cs" />
     <Compile Include="VobSystem\Definitions\IVobDefListRegistration.cs" />
-    <Compile Include="Network\IPacketWriterFactory.cs" />
+    <Compile Include="Network\IPacketWriterPool.cs" />
     <Compile Include="VobSystem\Definitions\IBaseDefFactory.cs" />
     <Compile Include="VobSystem\Definitions\INpcDefList.cs" />
     <Compile Include="VobSystem\Definitions\IVobDefRegistration.cs" />
@@ -110,7 +111,7 @@
     <Compile Include="VobSystem\Instances\OnDeathHandler.cs" />
     <Compile Include="VobSystem\Instances\OnItemAmountChangedHandler.cs" />
     <Compile Include="VobSystem\Instances\RemoveItemHandler.cs" />
-    <Compile Include="Network\PacketWriterFactory.cs" />
+    <Compile Include="Network\PacketWriterPool.cs" />
     <Compile Include="Chat\ChatCommandReceivedEventArgs.cs" />
     <Compile Include="Chat\ChatMessageEventArgs.cs" />
     <Compile Include="ReusedClasses\ChatMode.cs" />

@@ -7,5 +7,6 @@
         Banned=2,
         UserNameAlreadyInUse=3,
         Timeout=4,
+        AccountAlreadyLoggedIn=5,
     }
 }

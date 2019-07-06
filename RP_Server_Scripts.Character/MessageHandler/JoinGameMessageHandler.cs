@@ -15,14 +15,14 @@ namespace RP_Server_Scripts.Character.MessageHandler
     {
         private readonly CharacterService _Service;
         private readonly AuthenticationService _AuthenticationService;
-        private readonly IPacketWriterFactory _PacketWriterFactory;
+        private readonly IPacketWriterPool _PacketWriterPool;
         private readonly ILogger _Log;
 
-        public JoinGameMessageHandler(CharacterService service, AuthenticationService authenticationService, IPacketWriterFactory packetWriterFactory, ILoggerFactory loggerFactory)
+        public JoinGameMessageHandler(CharacterService service, AuthenticationService authenticationService, IPacketWriterPool packetWriterPool, ILoggerFactory loggerFactory)
         {
             _Service = service ?? throw new ArgumentNullException(nameof(service));
             _AuthenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
-            _PacketWriterFactory = packetWriterFactory ?? throw new ArgumentNullException(nameof(packetWriterFactory));
+            _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
             _Log = loggerFactory?.GetLogger(GetType()) ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
 
@@ -65,12 +65,15 @@ namespace RP_Server_Scripts.Character.MessageHandler
                     IList<Character> list = await _Service.GetAccountOwnedCharactersAsync(session.Account);
                     Character selectedChar = list.FirstOrDefault(c => c.CharacterId == id);
 
-                    PacketWriter packet = _PacketWriterFactory.GetScriptMessageStream(ScriptMessages.JoinGameResult);
+                    bool success = true;
+                    JoinGameFailedReason failureReason = JoinGameFailedReason.None;
+
+
                     if (selectedChar == null)
                     {
                         //Invalid character id... return an error
-                        packet.Write(false);
-                        packet.Write((byte)JoinGameFailedReason.InvalidCharacterId);
+                        success = false;
+                        failureReason = JoinGameFailedReason.InvalidCharacterId;
                     }
                     else
                     {
@@ -82,16 +85,26 @@ namespace RP_Server_Scripts.Character.MessageHandler
                         if (mapping.CharacterNpc.TryGetControllingClient(out Client.Client controllingClient))
                         {
                             //Character is in use by someone else.
-                            packet.Write(true);
-                            packet.Write((byte)JoinGameFailedReason.CharacterInUse);
+                            success = false;
+                            failureReason = JoinGameFailedReason.CharacterInUse;
                         }
                         else
                         {
                             sender.SetControl(mapping.CharacterNpc);
-                            packet.Write(true);
                         }
                     }
-                    sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+
+                    //Send the result to the client.
+                    using (var packet = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.JoinGameResult))
+                    {
+                        packet.Write(success);
+                        //Write the error code.
+                        if (!success)
+                        {
+                            packet.Write((byte)failureReason);
+                        }
+                        sender.SendScriptMessage(packet, NetPriority.Medium, NetReliability.Reliable);
+                    }
                 }
             }
             catch (Exception e)
