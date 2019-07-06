@@ -1,9 +1,11 @@
-﻿using GUC.Types;
+﻿using System.Diagnostics;
+using GUC.Types;
 using RP_Server_Scripts.VobSystem.Definitions;
 using RP_Server_Scripts.WorldSystem;
 
 namespace RP_Server_Scripts.Character
 {
+    [DebuggerDisplay("Character: {" + nameof(Name) + "}")]
     public abstract class Character
     {
         private readonly CharacterService _CharacterService;

@@ -16,7 +16,7 @@ using RP_Server_Scripts.VobSystem.Instances;
 
 namespace RP_Server_Scripts.Character
 {
-    public sealed class CharacterService : IStartable
+    public sealed class CharacterService
     {
 
         private readonly object _Lock = new object();
@@ -332,7 +332,7 @@ namespace RP_Server_Scripts.Character
             CharacterCreated?.Invoke(this, args);
         }
 
-        void IStartable.Start()
+        internal void Init()
         {
             if (_Started)
             {

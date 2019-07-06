@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using RP_Shared_Script;
 
 namespace RP_Server_Scripts.Authentication
 {
+    [DebuggerDisplay("Account: {" + nameof(UserName) + "}")]
     public sealed class Account
     {
         public string UserName { get; }

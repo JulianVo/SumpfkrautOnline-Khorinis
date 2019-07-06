@@ -54,9 +54,11 @@ namespace RP_Server_Scripts.Character
                     args.Context.Resolve<GetCharacterOwnershipsCountTransaction>();
                 args.Instance.AuthenticationService =
                     args.Context.Resolve<AuthenticationService>();
+                //Initialize the service.
+                args.Instance.Init();
 
-
-            }).AsSelf().SingleInstance();
+            }).AsSelf()
+                .SingleInstance();
 
 
             //Message Handling
