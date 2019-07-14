@@ -5,6 +5,7 @@ using RP_Server_Scripts.Autofac;
 using RP_Server_Scripts.Character.MessageHandler;
 using RP_Server_Scripts.Character.MessageHandler.InformationWriter;
 using RP_Server_Scripts.Character.Transaction;
+using RP_Server_Scripts.Character.Transaction.SaveCharacter;
 using RP_Server_Scripts.Network;
 
 namespace RP_Server_Scripts.Character
@@ -33,6 +34,8 @@ namespace RP_Server_Scripts.Character
             builder.RegisterType<SetAccountActiveCharacterTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<GetAccountActiveCharacterTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<GetCharacterOwnershipsCountTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
+            builder.RegisterType<SaveCharacterTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
+            
 
             //Register the service. This is a somewhat more complicated than because of the possible circular references with the transaction classes.
             builder.Register(context => new CharacterService()
@@ -52,6 +55,8 @@ namespace RP_Server_Scripts.Character
                     args.Context.Resolve<GetAccountActiveCharacterTransaction>();
                 args.Instance.GetCharacterOwnershipsCountTransaction =
                     args.Context.Resolve<GetCharacterOwnershipsCountTransaction>();
+                args.Instance.SaveCharacterTransaction =
+                    args.Context.Resolve<SaveCharacterTransaction>();
                 args.Instance.AuthenticationService =
                     args.Context.Resolve<AuthenticationService>();
                 //Initialize the service.

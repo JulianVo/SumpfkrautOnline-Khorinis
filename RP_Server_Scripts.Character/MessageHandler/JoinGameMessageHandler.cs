@@ -77,6 +77,9 @@ namespace RP_Server_Scripts.Character.MessageHandler
                     }
                     else
                     {
+                        //Save the active character(this causes a database access).
+                        await _Service.SetAccountActiveCharacterAsync(session.Account, selectedChar);
+
                         if (!selectedChar.TryGetMapping(out CharacterMapping mapping))
                         {
                             mapping = selectedChar.SpawnAndMap();

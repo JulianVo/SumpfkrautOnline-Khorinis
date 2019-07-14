@@ -132,7 +132,6 @@ namespace RP_Server_Scripts.Client
 
         void GameClient.IScriptClient.OnDisconnection(int id)
         {
-            this.ControlledNpc?.Despawn();
             using (var s = _StreamPool.GetScriptMessageStream(ScriptMessages.PlayerQuit))
             {
                 s.Write((byte)id);

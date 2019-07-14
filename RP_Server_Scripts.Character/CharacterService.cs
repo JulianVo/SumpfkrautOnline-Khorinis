@@ -12,6 +12,7 @@ using RP_Server_Scripts.Character.Transaction;
 using RP_Server_Scripts.Character.Transaction.AddCharacterOwnerShip;
 using RP_Shared_Script;
 using GUC.Types;
+using RP_Server_Scripts.Character.Transaction.SaveCharacter;
 using RP_Server_Scripts.VobSystem.Instances;
 
 namespace RP_Server_Scripts.Character
@@ -47,6 +48,8 @@ namespace RP_Server_Scripts.Character
         internal GetAccountActiveCharacterTransaction GetAccountActiveCharacterTransaction { get; set; }
 
         internal GetCharacterOwnershipsCountTransaction GetCharacterOwnershipsCountTransaction { get; set; }
+
+        internal SaveCharacterTransaction SaveCharacterTransaction { get; set; }
 
         internal AuthenticationService AuthenticationService { get; set; }
 
@@ -308,6 +311,11 @@ namespace RP_Server_Scripts.Character
             {
                 if (_ActiveMappings.TryGetValue(character.CharacterId, out CharacterMapping mapping))
                 {
+                    character.LastKnownPosition = mapping.CharacterNpc.GetPosition();
+                    character.Rotation = mapping.CharacterNpc.GetAngles();
+                    character.World = mapping.CharacterNpc.World;
+                    character.Template = mapping.CharacterNpc.Template;
+
                     //Despawn the character npc and remove the mapping.
                     npc = mapping.CharacterNpc;
                     _ActiveMappings.Remove(character.CharacterId);
@@ -326,6 +334,9 @@ namespace RP_Server_Scripts.Character
             }
             npc?.Despawn();
         }
+
+        public Task SaveCharacterAsync(Character character) => SaveCharacterTransaction.SaveCharacterAsync(character);
+
 
         internal void OnCharacterCreated(CharacterCreatedArgs args)
         {

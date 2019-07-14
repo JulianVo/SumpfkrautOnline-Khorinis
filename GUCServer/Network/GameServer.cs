@@ -45,7 +45,6 @@ namespace GUC.Network
 
         static void ReadUserMessage(ClientMessages id, GameClient client, PacketReader stream)
         {
-            Logger.Log(Logger.LOG_INFO, $"Game message received '{id}' from {client.SystemAddress}");
             switch (id)
             {
                 case ClientMessages.WorldLoadedMessage:

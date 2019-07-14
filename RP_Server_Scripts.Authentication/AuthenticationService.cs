@@ -413,13 +413,6 @@ namespace RP_Server_Scripts.Authentication
             //If the Client ist still connected we have to send the messages that are required to bring the client back to the state of being able to log in again.
             if (client.IsConnected)
             {
-                if (client.ControlledNpc != null)
-                {
-                    var character = client.ControlledNpc;
-                    client.RemoveControl();
-                    character?.Despawn();
-                }
-
                 using (var message = _PacketWriterPool.GetScriptMessageStream(ScriptMessages.LogoutAcknowledged))
                 {
                     client.SendScriptMessage(message, NetPriority.High, NetReliability.ReliableOrdered);

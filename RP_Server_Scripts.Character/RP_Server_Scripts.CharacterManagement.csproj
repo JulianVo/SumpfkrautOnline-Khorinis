@@ -92,6 +92,7 @@
     <Compile Include="Transaction\GetAccountActiveCharacter\GetAccountActiveCharacterTransaction.cs" />
     <Compile Include="Transaction\GetAccountOwnedCharacters\GetAccountOwnedCharactersTransaction.cs" />
     <Compile Include="Transaction\GetCharacterOwnershipsCount\GetCharacterOwnershipsCountTransaction.cs" />
+    <Compile Include="Transaction\SaveCharacter\SaveCharacterTransaction.cs" />
     <Compile Include="Transaction\SetAccountActiveCharacter\SetAccountActiveCharacterTransaction.cs" />
   </ItemGroup>
   <ItemGroup>

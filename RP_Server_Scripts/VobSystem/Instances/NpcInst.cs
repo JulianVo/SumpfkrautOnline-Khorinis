@@ -31,7 +31,7 @@ namespace RP_Server_Scripts.VobSystem.Instances
         public ItemInventory BaseInventory => BaseInst.Inventory;
         public ScriptInventory Inventory => (ScriptInventory)BaseInventory.ScriptObject;
 
-        public new NpcDef Definition => (NpcDef)base.Definition;
+        public new NpcDef Template => (NpcDef)base.Definition;
 
         public NPCMovement Movement => BaseInst.Movement;
         public VobEnvironment Environment => BaseInst.Environment;
