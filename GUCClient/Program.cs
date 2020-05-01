@@ -22,57 +22,60 @@ namespace GUC
 
     public static class Program
     {
-        static string gothicPath;
-        static string projectPath;
-        static string serverIP;
-        static ushort serverPort;
-        static string password;
-        static string gothicRootPath;
+        static string _GothicPath;
+        static string _ProjectPath;
+        static string _ServerIP;
+        static ushort _ServerPort;
+        static string _Password;
+        static string _GothicRootPath;
 
         /// <summary> Gothic 2 folder. No backslash at the end. </summary>
-        public static string GothicPath { get { return gothicPath; } }
-        /// <summary> Gothic 2 folder. No backslash at the end. (Gothic2/System at start of program) </summary>
-        public static string GothicRootPath { get { return gothicRootPath; } }
-        /// <summary> project (ip) folder. No backslash at the end. </summary>
-        public static string ProjectPath { get { return projectPath; } }
-        public static string ServerIP { get { return serverIP; } }
-        public static ushort ServerPort { get { return serverPort; } }
-        public static string Password { get { return password; } }
+        public static string GothicPath => _GothicPath;
 
-        public static string ProjectPathCombine(string path) { return Path.Combine(projectPath, path); }
-        public static string GothicPathCombine(string path) { return Path.Combine(gothicPath, path); }
-        public static string GothicRootPathCombine(string path) { return Path.Combine(gothicRootPath, path); }
+        /// <summary> Gothic 2 folder. No backslash at the end. (Gothic2/System at start of program) </summary>
+        public static string GothicRootPath => _GothicRootPath;
+
+        /// <summary> project (ip) folder. No backslash at the end. </summary>
+        public static string ProjectPath => _ProjectPath;
+
+        public static string ServerIP => _ServerIP;
+        public static ushort ServerPort => _ServerPort;
+        public static string Password => _Password;
+
+        public static string ProjectPathCombine(string path) { return Path.Combine(_ProjectPath, path); }
+        public static string GothicPathCombine(string path) { return Path.Combine(_GothicPath, path); }
+        public static string GothicRootPathCombine(string path) { return Path.Combine(_GothicRootPath, path); }
 
         static void SetRootPathHook(Hook hook, RegisterMemory rmem)
         {
-            gothicRootPath = Gothic.System.zFile.s_rootPathString.ToString().ToUpperInvariant();
-            Logger.Log("Set root to: " + gothicRootPath);
+            _GothicRootPath = Gothic.System.zFile.s_rootPathString.ToString().ToUpperInvariant();
+            Logger.Log("Set root to: " + _GothicRootPath);
         }
 
         static void SetupProject()
         {
-            gothicPath = Environment.GetEnvironmentVariable("GUCGothicPath").ToUpperInvariant();
-            if (string.IsNullOrWhiteSpace(gothicPath) || !Directory.Exists(gothicPath))
+            _GothicPath = Environment.GetEnvironmentVariable("GUCGothicPath").ToUpperInvariant();
+            if (string.IsNullOrWhiteSpace(_GothicPath) || !Directory.Exists(_GothicPath))
                 throw new Exception("Gothic folder environment variable is null or not found!");
 
             Process.AddHook(SetRootPathHook, 0x44235E, 7);
             Process.AddHook(SetRootPathHook, 0x44237A, 7);
-            gothicRootPath = Path.Combine(gothicPath, "SYSTEM").ToUpperInvariant();
+            _GothicRootPath = Path.Combine(_GothicPath, "SYSTEM").ToUpperInvariant();
 
-            projectPath = Environment.GetEnvironmentVariable("GUCProjectPath").ToUpperInvariant();
-            if (string.IsNullOrWhiteSpace(projectPath) || !Directory.Exists(projectPath))
+            _ProjectPath = Environment.GetEnvironmentVariable("GUCProjectPath").ToUpperInvariant();
+            if (string.IsNullOrWhiteSpace(_ProjectPath) || !Directory.Exists(_ProjectPath))
                 throw new Exception("Project folder environment variable is null or not found!");
 
-            serverIP = Environment.GetEnvironmentVariable("GUCServerIP");
-            if (string.IsNullOrWhiteSpace(serverIP))
+            _ServerIP = Environment.GetEnvironmentVariable("GUCServerIP");
+            if (string.IsNullOrWhiteSpace(_ServerIP))
                 throw new Exception("Server IP environment variable is null or white space!");
 
-            if (!ushort.TryParse(Environment.GetEnvironmentVariable("GUCServerPort"), out serverPort))
+            if (!ushort.TryParse(Environment.GetEnvironmentVariable("GUCServerPort"), out _ServerPort))
                 throw new Exception("Could not parse server port environment variable to ushort!");
 
-            password = Environment.GetEnvironmentVariable("GUCServerPassword");
-            if (string.IsNullOrWhiteSpace(password))
-                password = null;
+            _Password = Environment.GetEnvironmentVariable("GUCServerPassword");
+            if (string.IsNullOrWhiteSpace(_Password))
+                _Password = null;
 
             AppDomain.CurrentDomain.AssemblyResolve += ResolveAssembly;
 
@@ -102,10 +105,15 @@ namespace GUC
                 return Assembly.Load(buffer);
             }
 
+       
             //Only load assemblies form this location if the actually exist. Otherwise we would block later AppDomain.CurrentDomain.AssemblyResolve  handler(e.g. Costura.Fody)
-            if (File.Exists(Path.Combine(projectPath, name + ".dll")))
+            if (File.Exists(Path.Combine(_ProjectPath, name + ".dll")))
             {
-                return Assembly.LoadFrom(Path.Combine(projectPath, name + ".dll"));
+                return Assembly.LoadFrom(Path.Combine(_ProjectPath, name + ".dll"));
+            }
+            if (File.Exists(Path.Combine(_ProjectPath, "Scripts", name + ".dll")))
+            {
+                return Assembly.LoadFrom(Path.Combine(_ProjectPath, "Scripts", name + ".dll"));
             }
 
             return null;
@@ -226,7 +234,7 @@ namespace GUC
 
                 // Load Scripts
                 Logger.Log("Loading client scripts...");
-                Scripting.ScriptManager.StartScripts(Path.Combine(projectPath, "Scripts", "RP_Client_Scripts.dll"));
+                Scripting.ScriptManager.StartScripts(Path.Combine(_ProjectPath, "Scripts", "RP_Client_Scripts.dll"));
 
                 Logger.Log("Waiting...");
                 SplashScreen.WaitHandle.WaitOne(3000);
