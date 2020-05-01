@@ -96,7 +96,7 @@ namespace RP_Server_Scripts
             string authenticationModulePath = Path.Combine(Path.GetDirectoryName(new Uri(this.GetType().Assembly.CodeBase).AbsolutePath) ?? throw new InvalidOperationException(), "RP_Server_Scripts.Authentication.dll");
             moduleAssemblies.Add(Assembly.LoadFrom(authenticationModulePath));
 
-            string characterModule = Path.Combine(Path.GetDirectoryName(new Uri(this.GetType().Assembly.CodeBase).AbsolutePath) ?? throw new InvalidOperationException(), "RP_Server_Scripts.Character.dll");
+            string characterModule = Path.Combine(Path.GetDirectoryName(new Uri(this.GetType().Assembly.CodeBase).AbsolutePath) ?? throw new InvalidOperationException(), "RP_Server_Scripts.CharacterManagement.dll");
             moduleAssemblies.Add(Assembly.LoadFrom(characterModule));
 
             foreach (var moduleAssembly in moduleAssemblies)

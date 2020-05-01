@@ -44,7 +44,6 @@ namespace RP_Server_Scripts.Character.MessageHandler
                 //Get the account session of the client.
                 if (_AuthenticationService.TryGetSession(sender, out Session session))
                 {
-
                     var ownedCharsTask = _CharacterService.GetAccountOwnedCharactersAsync(session.Account);
                     var activeCharTask = _CharacterService.GetAccountActiveCharacterTransactionAsync(session.Account);
                     await Task.WhenAll(ownedCharsTask, activeCharTask);

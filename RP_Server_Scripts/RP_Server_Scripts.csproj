@@ -72,6 +72,9 @@
     <Compile Include="Chat\ChatCommandController.cs" />
     <Compile Include="Chat\HelpChatCommand.cs" />
     <Compile Include="Chat\IChatCommand.cs" />
+    <Compile Include="Component\ComponentSelector.cs" />
+    <Compile Include="Component\ComponentNotFoundException.cs" />
+    <Compile Include="Component\IComponentLocator.cs" />
     <Compile Include="Logging\GucLogger.cs" />
     <Compile Include="Logging\GucLoggerFactory.cs" />
     <Compile Include="Logging\ILogger.cs" />

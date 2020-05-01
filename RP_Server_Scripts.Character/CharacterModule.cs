@@ -2,10 +2,12 @@
 using Autofac;
 using RP_Server_Scripts.Authentication;
 using RP_Server_Scripts.Autofac;
+using RP_Server_Scripts.Character.AccountComponent;
 using RP_Server_Scripts.Character.MessageHandler;
 using RP_Server_Scripts.Character.MessageHandler.InformationWriter;
 using RP_Server_Scripts.Character.Transaction;
 using RP_Server_Scripts.Character.Transaction.SaveCharacter;
+using RP_Server_Scripts.Component;
 using RP_Server_Scripts.Network;
 
 namespace RP_Server_Scripts.Character
@@ -35,6 +37,9 @@ namespace RP_Server_Scripts.Character
             builder.RegisterType<GetAccountActiveCharacterTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<GetCharacterOwnershipsCountTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
             builder.RegisterType<SaveCharacterTransaction>().AsSelf().SingleInstance().FindConstructorsWith(allConstructorFinder);
+
+            // Account components
+            builder.RegisterType<CharacterListLocator>().As<IComponentLocator<Account>>().SingleInstance();
             
 
             //Register the service. This is a somewhat more complicated than because of the possible circular references with the transaction classes.

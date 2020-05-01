@@ -7,8 +7,8 @@
     <ProjectGuid>{5F0D5DF1-840A-4466-9E6E-DB1AB58E348B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RP_Server_Scripts.Character</RootNamespace>
-    <AssemblyName>RP_Server_Scripts.Character</AssemblyName>
+    <RootNamespace>RP_Server_Scripts.CharacterManagement</RootNamespace>
+    <AssemblyName>RP_Server_Scripts.CharacterManagement</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.Character.xml</DocumentationFile>
+    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.CharacterManagement.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.Character.xml</DocumentationFile>
+    <DocumentationFile>..\bin\Server\Scripts\RP_Server_Scripts.CharacterManagement.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountComponent\CharacterAccountExtensions.cs" />
+    <Compile Include="AccountComponent\CharacterList.cs" />
+    <Compile Include="AccountComponent\CharacterListLocator.cs" />
     <Compile Include="AccountLogoutHandling.cs" />
     <Compile Include="CharacterMapping.cs" />
     <Compile Include="MessageHandler\InformationWriter\CharacterVisualsWriter.cs" />
@@ -121,5 +124,6 @@
       <Name>RP_Shared_Script</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

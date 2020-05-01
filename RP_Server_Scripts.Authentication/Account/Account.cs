@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using RP_Server_Scripts.Component;
 using RP_Shared_Script;
 
 namespace RP_Server_Scripts.Authentication
@@ -12,12 +13,13 @@ namespace RP_Server_Scripts.Authentication
         public int AccountId { get; }
 
         private readonly string _PasswordHash;
+        private readonly ComponentSelector<Account> _ComponentSelector;
 
         public event GenericEventHandler<Account, LogoutEventArgs> LoggedOut;
 
         public bool IsLoggedIn { get; private set; }
 
-        internal Account(string userName, int accountId, string passwordHash)
+        internal Account(string userName, int accountId, string passwordHash, ComponentSelector<Account> componentSelector)
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
@@ -38,6 +40,7 @@ namespace RP_Server_Scripts.Authentication
             UserName = userName;
             AccountId = accountId;
             _PasswordHash = passwordHash;
+            _ComponentSelector = componentSelector ?? throw new ArgumentNullException(nameof(componentSelector));
             IsLoggedIn = true;
         }
 
@@ -61,6 +64,11 @@ namespace RP_Server_Scripts.Authentication
 
             IsLoggedIn = false;
             LoggedOut?.Invoke(this, args);
+        }
+
+        public bool TryGetComponent<TComponent>(out TComponent component)
+        {
+            return _ComponentSelector.TryGetComponent(this, out component);
         }
     }
 }

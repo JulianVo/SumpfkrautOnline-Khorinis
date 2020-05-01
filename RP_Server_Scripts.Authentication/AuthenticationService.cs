@@ -6,6 +6,7 @@ using GUC;
 using GUC.Network;
 using RP_Server_Scripts.Authentication.Login;
 using RP_Server_Scripts.Client;
+using RP_Server_Scripts.Component;
 using RP_Server_Scripts.Database.Account;
 using RP_Server_Scripts.Logging;
 using RP_Server_Scripts.Network;
@@ -24,6 +25,7 @@ namespace RP_Server_Scripts.Authentication
         private readonly IPasswordService _PasswordService;
         private readonly IMainThreadDispatcher _Dispatcher;
         private readonly IPacketWriterPool _PacketWriterPool;
+        private readonly ComponentSelector<Account> _ComponentSelector;
         private readonly object _Lock = new object();
         private readonly Dictionary<Client.Client, Session> _SessionByClient = new Dictionary<Client.Client, Session>();
         private readonly ILogger _Log;
@@ -50,7 +52,15 @@ namespace RP_Server_Scripts.Authentication
 
 
 
-        internal AuthenticationService(ClientList clientList, IAuthenticationContextFactory contextFactory, IPasswordService passwordService, IMainThreadDispatcher dispatcher, ILoggerFactory loggerFactory, ServerOptionsProvider optionsProvider, IPacketWriterPool packetWriterPool)
+        internal AuthenticationService(
+            ClientList clientList,
+            IAuthenticationContextFactory contextFactory,
+            IPasswordService passwordService,
+            IMainThreadDispatcher dispatcher,
+            ILoggerFactory loggerFactory,
+            ServerOptionsProvider optionsProvider,
+            IPacketWriterPool packetWriterPool,
+            ComponentSelector<Account> componentSelector)
         {
             if (clientList == null)
             {
@@ -71,6 +81,7 @@ namespace RP_Server_Scripts.Authentication
             _PasswordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
             _Dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _PacketWriterPool = packetWriterPool ?? throw new ArgumentNullException(nameof(packetWriterPool));
+            _ComponentSelector = componentSelector ?? throw new ArgumentNullException(nameof(componentSelector));
             _Log = loggerFactory.GetLogger(GetType());
 
             _ClientIdLoggedIn = new bool[optionsProvider.Slot];
@@ -148,7 +159,7 @@ namespace RP_Server_Scripts.Authentication
                          context.SaveChanges();
 
                          // Login successful, create an Account object and bind it to the client with a session.
-                         Account account = new Account(accountEntity.UserName, accountEntity.AccountId, accountEntity.PasswordHash);
+                         Account account = new Account(accountEntity.UserName, accountEntity.AccountId, accountEntity.PasswordHash, _ComponentSelector);
                          Session session = new Session(client, account);
                          _SessionByClient.Add(client, session);
                          _ClientIdLoggedIn[client.Id] = true;
@@ -278,7 +289,7 @@ namespace RP_Server_Scripts.Authentication
                             //Logout the client just in case it is already logged in(this is a case that should not be allowed by the Frontend => Gothic client).
                             LogoutClient(client);
 
-                            Account account = new Account(accountEntity.UserName, accountEntity.AccountId, accountEntity.PasswordHash);
+                            Account account = new Account(accountEntity.UserName, accountEntity.AccountId, accountEntity.PasswordHash, _ComponentSelector);
                             Session session = new Session(client, account);
                             _SessionByClient.Add(client, session);
                             _ClientIdLoggedIn[client.Id] = true;
@@ -296,7 +307,7 @@ namespace RP_Server_Scripts.Authentication
                 catch (Exception e)
                 {
                     _Log.Error($"Something went wrong while creating a new account and login in. Exception: {e}");
-                    return new LoginFailedResult(LoginFailedReason.None,"Internal server error.");
+                    return new LoginFailedResult(LoginFailedReason.None, "Internal server error.");
                 }
             });
         }

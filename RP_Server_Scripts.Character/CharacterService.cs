@@ -213,7 +213,7 @@ namespace RP_Server_Scripts.Character
         public Task<ActiveCharacterResult> GetAccountActiveCharacterTransactionAsync(Account account) =>
             GetAccountActiveCharacterTransaction.GetAccountActiveCharacterAsync(account);
 
-        public Task<int> GetCharacterOwnershipsCount(Account account)
+        public Task<int> GetCharacterOwnershipsCountAsync(Account account)
         {
             if (account == null)
             {

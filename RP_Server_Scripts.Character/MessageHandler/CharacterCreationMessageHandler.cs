@@ -50,7 +50,7 @@ namespace RP_Server_Scripts.Character.MessageHandler
                 if (_AuthenticationService.TryGetSession(sender, out Session session))
                 {
                     //Lets first check if the account can have an additional account(limit is taken from the rp config).
-                    int charOwnershipsCount = await _CharacterService.GetCharacterOwnershipsCount(session.Account);
+                    int charOwnershipsCount = await _CharacterService.GetCharacterOwnershipsCountAsync(session.Account);
 
 
                     if (charOwnershipsCount >= _RpConfig.MaxCharacterPerAccount)
